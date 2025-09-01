@@ -1,10 +1,9 @@
 import { SuperAdmin, User } from "../models/index.js";
 
-export const authMW = async (req, res, next) => {
+export const authValidationMW = async (req, res, next) => {
     try {
         const { email, mobile } = req.body;
         let user = null;
-        let superAdmin = null;
 
         if (email) {
             user = await User.findOne({ where: { email } });
@@ -17,15 +16,14 @@ export const authMW = async (req, res, next) => {
         if (!user) {
             return res.status(404).json({ message: "User does not exist" });
         }
-
-        superAdmin = await SuperAdmin.findOne({ where: { created_by: user.id } });
+        const superAdmin = await SuperAdmin.findOne({ where: { created_by: user.id } });
 
         if (!superAdmin) {
             return res.status(404).json({ message: "SuperAdmin does not exist" });
         }
-
-        req.superAdmin = superAdmin;
         req.user = user;
+        req.superAdmin = superAdmin;
+
         next();
     } catch (err) {
         console.error("Auth MW Error:", err);

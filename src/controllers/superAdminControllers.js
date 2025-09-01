@@ -2,8 +2,14 @@ import redis from "../dbs/redisConnection.js";
 import { SuperAdmin, User, UserSuperMappings } from "../models/index.js";
 import jwt from "jsonwebtoken";
 import { sendOtpToEmail } from "../utils/sendOTP.js";
+import { v4 as uuidv4 } from "uuid";
+import Cryptr from "cryptr";
+import dotenv from "dotenv";
 
-// Create SuperAdmin
+dotenv.config();
+const jwtSecret = process.env.JWT_SECRET;
+const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
+
 export const registerSuperAdmin = async (req, res) => {
     try {
         const {
@@ -46,67 +52,84 @@ export const registerSuperAdmin = async (req, res) => {
     }
 };
 
-// send OTP
 export const sendOtpSuperAdmin = async (req, res) => {
     try {
         const user = req.user;
+        const { reason } = req.body;
 
         if (!user || !user.email) {
             return res.status(404).json({ message: "Associated user or email not found" });
         }
 
-        // Generate OTP
         const otp = await sendOtpToEmail(user.email);
 
-        // Use MOBILE as Redis key
         const key = `otp:${user.mobile}`;
-        await redis.set(key, otp, "EX", 300);
+        const dataToStore = JSON.stringify({
+            otp,
+            reason,
+            user: {
+                id: user.id,
+                email: user.email,
+                mobile: user.mobile
+            }
+        });
 
-        return res.json({ message: "OTP sent to registered email" });
+        await redis.set(key, dataToStore, "EX", 300);
+
+        return res.json({
+            message: `OTP sent successfully to ${user.email} for ${reason}`,
+            reason
+        });
     } catch (err) {
         console.error("Send OTP Error:", err);
         return res.status(500).json({ message: "Server error", error: err.message });
     }
 };
 
-// LOGIN + VERIFY OTP
 export const superAdminLogin = async (req, res) => {
     try {
-        const { otp, mobile } = req.body;
+        const { otp } = req.body;
 
-        if (!mobile) {
-            return res.status(400).json({ message: "Mobile required" });
+        if (!otp) {
+            return res.status(400).json({ message: "OTP required" });
         }
 
+        const user = req.user;
         const superAdmin = req.superAdmin;
 
-        const key = `otp:${mobile}`;
-        const storedOtp = await redis.get(key);
+        const key = user.mobile
+            ? `otp:${user.mobile}`
+            : `otp:${user.email}`;
 
-        console.log("Fetched OTP from Redis:", key, "=>", storedOtp);
+        const storedData = await redis.get(key);
+        console.log("Fetched OTP from Redis:", key, "=>", storedData);
 
-        if (!storedOtp) {
+        if (!storedData) {
             return res.status(400).json({ message: "OTP not sent or expired" });
         }
 
-        if (storedOtp !== otp) {
+        const parsedData = JSON.parse(storedData);
+
+        if (parsedData.otp !== otp) {
             return res.status(400).json({ message: "Invalid OTP" });
         }
 
-        // OTP verified → delete from Redis
         await redis.del(key);
 
-        // Generate JWT
-        const token = jwt.sign(
-            { id: superAdmin.id },
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" }
-        );
+        // Generate token + uuid
+        const token = jwt.sign({ id: user.id }, jwtSecret, { expiresIn: "1h" });
+        const uuid = uuidv4();
+        const encryptedKey = cryptr.encrypt(user.id.toString());
+
+        // Save in Redis
+        await redis.set(`auth:tokens:${user.id}`, token, "EX", 3600);
+        await redis.set(`auth:map:${uuid}`, encryptedKey, "EX", 3600);
 
         return res.json({
             message: "Login successful",
-            token,
+            uuid,
             superAdmin,
+            user
         });
     } catch (err) {
         console.error("Login Error:", err);
@@ -135,68 +158,65 @@ export const getAllSuperAdmins = async (req, res) => {
     }
 }
 
-// Get SuperAdmin by ID
-export const getSuperAdminById = async (req, res) => {
-    try {
-        const superAdmin = await SuperAdmin.findByPk(req.params.id, {
-            include: [
-                {
-                    model: User,
-                    as: "creator",
-                    attributes: ["id", "email", "mobile"]
-                }
-            ]
-        });
-        if (!superAdmin) {
-            return res.status(404).json({ message: "SuperAdmin not found" });
-        }
-        res.status(200).json(superAdmin);
-    } catch (error) {
-        res.status(500).json({
-            message: "Error fetching super admin",
-            error: error.message
-        });
-    }
-};
+// export const getSuperAdminById = async (req, res) => {
+//     try {
+//         const superAdmin = await SuperAdmin.findByPk(req.params.id, {
+//             include: [
+//                 {
+//                     model: User,
+//                     as: "creator",
+//                     attributes: ["id", "email", "mobile"]
+//                 }
+//             ]
+//         });
+//         if (!superAdmin) {
+//             return res.status(404).json({ message: "SuperAdmin not found" });
+//         }
+//         res.status(200).json(superAdmin);
+//     } catch (error) {
+//         res.status(500).json({
+//             message: "Error fetching super admin",
+//             error: error.message
+//         });
+//     }
+// };
 
-// Update SuperAdmin
-export const updateSuperAdmin = async (req, res) => {
-    try {
-        const [updated] = await SuperAdmin.update(
-            { ...req.body, modified_at: new Date() },
-            { where: { super_admin_id: req.params.id } }
-        );
-        if (!updated) {
-            return res.status(404).json({ message: "SuperAdmin not found" });
-        }
-        const updatedSuperAdmin = await SuperAdmin.findByPk(req.params.id);
-        res.status(200).json(updatedSuperAdmin);
-    } catch (error) {
-        res.status(400).json({
-            message: "Error updating super admin",
-            error: error.message
-        });
-    }
-};
+// export const updateSuperAdmin = async (req, res) => {
+//     try {
+//         const [updated] = await SuperAdmin.update(
+//             { ...req.body, modified_at: new Date() },
+//             { where: { super_admin_id: req.params.id } }
+//         );
+//         if (!updated) {
+//             return res.status(404).json({ message: "SuperAdmin not found" });
+//         }
+//         const updatedSuperAdmin = await SuperAdmin.findByPk(req.params.id);
+//         res.status(200).json(updatedSuperAdmin);
+//     } catch (error) {
+//         res.status(400).json({
+//             message: "Error updating super admin",
+//             error: error.message
+//         });
+//     }
+// };
 
-// Delete SuperAdmin
-export const deleteSuperAdmin = async (req, res) => {
-    try {
-        await UserSuperMappings.destroy({
-            where: { super_admin_id: req.params.id }
-        });
+// export const deleteSuperAdmin = async (req, res) => {
+//     try {
+//         await UserSuperMappings.destroy({
+//             where: { super_admin_id: req.params.id }
+//         });
 
-        const deleted = await SuperAdmin.destroy({
-            where: { super_admin_id: req.params.id }
-        });
-        if (!deleted) {
-            return res.status(404).json({ message: "SuperAdmin not found" });
-        }
-        res.status(200).json({ message: "SuperAdmin deleted successfully" });
-    } catch (error) {
-        res.status(500).json({
-            message: "Error deleting super admin",
-            error: error.message
-        });
-    }
-};
+//         const deleted = await SuperAdmin.destroy({
+//             where: { super_admin_id: req.params.id }
+//         });
+//         if (!deleted) {
+//             return res.status(404).json({ message: "SuperAdmin not found" });
+//         }
+//         res.status(200).json({ message: "SuperAdmin deleted successfully" });
+//     } catch (error) {
+//         res.status(500).json({
+//             message: "Error deleting super admin",
+//             error: error.message
+//         });
+//     }
+// };

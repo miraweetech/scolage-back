@@ -1,8 +1,10 @@
 import express from "express";
 import { createModule, deleteModule, getAllModules, getModuleById, updateModule } from "../controllers/moduleControllers.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const moduleApis = express.Router();
 
+moduleApis.use(authMiddleware)
 moduleApis.post('/create', createModule)
 moduleApis.get('/all', getAllModules)
 moduleApis.get('/:id', getModuleById)
