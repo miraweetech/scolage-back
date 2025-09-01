@@ -21,6 +21,10 @@ User.hasMany(Modules, { foreignKey: "created_by", as: "modules" });
 UserInstituteMappings.belongsTo(User, { foreignKey: "user_id", as: "user" });
 User.hasMany(UserInstituteMappings, { foreignKey: "user_id", as: "userInstituteMappings" });
 
+// SuperAdmin.created_by → User.id
+SuperAdmin.belongsTo(User, { foreignKey: "created_by", as: "creator" });
+User.hasMany(SuperAdmin, { foreignKey: "created_by", as: "createdSuperAdmins" });
+
 //UserModuleMappings.user.id -> User.id
 UserModuleMappings.belongsTo(User, { foreignKey: "user_id", as: "user" });
 User.hasMany(UserModuleMappings, { foreignKey: "user_id", as: "userModuleMappings" });

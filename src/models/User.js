@@ -18,7 +18,8 @@ const User = sequelize.define("User", {
         type: DataTypes.STRING
     },
     last_login: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        allowNull: true
     },
     created_at: {
         type: DataTypes.DATE,

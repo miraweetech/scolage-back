@@ -25,14 +25,14 @@ const SuperAdmin = sequelize.define("SuperAdmin", {
     },
     is_native: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true
+        defaultValue: false
     },
     is_active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
     },
     status: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM("active", "inactive", "suspended"),
         defaultValue: "active"
     },
     created_at: {

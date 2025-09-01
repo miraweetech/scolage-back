@@ -2,14 +2,14 @@ import express from "express";
 import dotenv from "dotenv";
 import { sequelize } from "./dbs/connection.js";
 import "./models/index.js" 
-import userRoutes from "./routers/userRoutes.js";
+import routers from "./routers/routers.js";
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 
 // Routes
-app.use("/v1", userRoutes);
+app.use('/v1', routers)
 
 // Sync Models (Auto-create tables)
 sequelize.sync({ force: false }).then(() => {
