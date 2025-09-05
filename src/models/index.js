@@ -54,44 +54,44 @@ InstituteType.belongsTo(SuperAdmin, { foreignKey: "created_by", as: "creator" })
 SuperAdmin.hasMany(InstituteType, { foreignKey: "created_by", as: "instituteTypes" });
 
 //InstituteModules.module_id -> Modules.module_id
-InstituteModules.belongsTo(Modules, {foreignKey: "module_id", as: "module"});
-Modules.hasMany(InstituteModules, {foreignKey: "module_id", as: "instituteModules"});
+InstituteModules.belongsTo(Modules, { foreignKey: "module_id", as: "module" });
+Modules.hasMany(InstituteModules, { foreignKey: "module_id", as: "instituteModules" });
 
 //subModulePermissions.module_id -> Modules.module_id
-SubModulesPermissions.belongsTo(Modules, {foreignKey: "module_id", as: "module"});
-Modules.hasMany(SubModulesPermissions, {foreignKey: "module_id", as: "subModulesPermissions"});
+SubModulesPermissions.belongsTo(Modules, { foreignKey: "module_id", as: "module" });
+Modules.hasMany(SubModulesPermissions, { foreignKey: "module_id", as: "subModulesPermissions" });
 
 //SuperModules.module_id -> Modules.module_id
-SuperModules.belongsTo(Modules, {foreignKey: "module_id", as: "module"});
-Modules.hasMany(SuperModules, {foreignKey: "module_id", as: "superModules"});
+SuperModules.belongsTo(Modules, { foreignKey: "module_id", as: "module" });
+Modules.hasMany(SuperModules, { foreignKey: "module_id", as: "superModules" });
 
 //UserModuleMappings.module_id -> Modules.module_id
-UserModuleMappings.belongsTo(Modules, {foreignKey: "module_id", as: "module"});
-Modules.hasMany(UserModuleMappings, {foreignKey: "module_id", as: "userModuleMappings"});
+UserModuleMappings.belongsTo(Modules, { foreignKey: "module_id", as: "module" });
+Modules.hasMany(UserModuleMappings, { foreignKey: "module_id", as: "userModuleMappings" });
 
 //SubModulesPermissionsMapping.module_id -> Modules.module_id
-SubModulesPermissionsMapping.belongsTo(Modules, {foreignKey: "module_id", as: "module"});
-Modules.hasMany(SubModulesPermissionsMapping, {foreignKey: "module_id", as: "subModulesPermissionsMappings"});
+SubModulesPermissionsMapping.belongsTo(Modules, { foreignKey: "module_id", as: "module" });
+Modules.hasMany(SubModulesPermissionsMapping, { foreignKey: "module_id", as: "subModulesPermissionsMappings" });
 
 //Institute.institute_type_id -> InstituteType.institute_type_id
-Institute.belongsTo(InstituteType, {foreignKey: "institute_type_id", as: "instituteType"});
-InstituteType.hasMany(Institute, {foreignKey: "institute_type_id", as: "institutes"});
+Institute.belongsTo(InstituteType, { foreignKey: "institute_type_id", as: "instituteType" });
+InstituteType.hasMany(Institute, { foreignKey: "institute_type_id", as: "institutes" });
 
 //UserInstituteMappings.institute_admin_id -> InstituteAdmins.institute_admin_id
-UserInstituteMappings.belongsTo(InstituteAdmin, {foreignKey: "institute_admin_id", as: "instituteAdmin"});
-InstituteAdmin.hasMany(UserInstituteMappings, {foreignKey: "institute_admin_id", as: "userInstituteMappings"});
+UserInstituteMappings.belongsTo(InstituteAdmin, { foreignKey: "institute_admin_id", as: "instituteAdmin" });
+InstituteAdmin.hasMany(UserInstituteMappings, { foreignKey: "institute_admin_id", as: "userInstituteMappings" });
 
 //userInstituteMappings.institute_id -> Institutes.id
-UserInstituteMappings.belongsTo(Institute, {foreignKey: "institute_id", as: "institute"});
-Institute.hasMany(UserInstituteMappings, {foreignKey: "institute_id", as: "userInstituteMappings"});
+UserInstituteMappings.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
+Institute.hasMany(UserInstituteMappings, { foreignKey: "institute_id", as: "userInstituteMappings" });
 
 //SubModulesPermissionsMapping.sub_module_permission_id -> SubModulesPermissions.sub_module_permission_id
-SubModulesPermissionsMapping.belongsTo(SubModulesPermissions, {foreignKey: "sub_module_permissions_id", as: "subModulePermission"});
-SubModulesPermissions.hasMany(SubModulesPermissionsMapping, {foreignKey: "sub_module_permissions_id", as: "subModulesPermissionsMappings"});
+SubModulesPermissionsMapping.belongsTo(SubModulesPermissions, { foreignKey: "sub_module_permissions_id", as: "subModulePermission" });
+SubModulesPermissions.hasMany(SubModulesPermissionsMapping, { foreignKey: "sub_module_permissions_id", as: "subModulesPermissionsMappings" });
 
 //subModulesPermissionsMapping.permission_type_id -> PermissionType.permission_type_id
-SubModulesPermissionsMapping.belongsTo(PermissionType, {foreignKey: "permission_type_id", as: "permissionType"});
-PermissionType.hasMany(SubModulesPermissionsMapping, {foreignKey: "permission_type_id", as: "subModulesPermissionsMappings"});
+SubModulesPermissionsMapping.belongsTo(PermissionType, { foreignKey: "permission_type_id", as: "permissionType" });
+PermissionType.hasMany(SubModulesPermissionsMapping, { foreignKey: "permission_type_id", as: "subModulesPermissionsMappings" });
 
 // Export all models if needed
 export {
@@ -108,5 +108,5 @@ export {
     InstituteModules,
     SuperModules,
     InstituteAdmin,
-    PermissionType  
+    PermissionType
 };

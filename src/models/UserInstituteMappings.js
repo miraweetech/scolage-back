@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../dbs/connection.js";
+import { sequelize } from "../configs/connection.js";
 
 const UserInstituteMappings = sequelize.define("UserInstituteMappings", {
     user_institute_mappings_id: {

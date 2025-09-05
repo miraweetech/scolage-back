@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../dbs/connection.js";
+import { sequelize } from "../configs/connection.js";
 
 const Modules = sequelize.define("Modules", {
     module_id: {
@@ -12,7 +12,7 @@ const Modules = sequelize.define("Modules", {
     },
     is_super: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: true
     },
     is_institute: {
         type: DataTypes.BOOLEAN,

@@ -1,7 +1,7 @@
-import redis from "../dbs/redisConnection.js";
+import redis from "../configs/redisConnection.js";
 import { SuperAdmin, User, UserSuperMappings } from "../models/index.js";
 import jwt from "jsonwebtoken";
-import { sendOtpToEmail } from "../utils/sendOTP.js";
+import { sendOtpToEmail } from "../services/otp.services.js";
 import { v4 as uuidv4 } from "uuid";
 import Cryptr from "cryptr";
 import dotenv from "dotenv";
@@ -60,11 +60,10 @@ export const sendOtpSuperAdmin = async (req, res) => {
         if (!user || !user.email) {
             return res.status(404).json({ message: "Associated user or email not found" });
         }
-
         const otp = await sendOtpToEmail(user.email);
 
         const key = `otp:${user.mobile}`;
-        const dataToStore = JSON.stringify({
+        const dataToStore = {
             otp,
             reason,
             user: {
@@ -72,9 +71,13 @@ export const sendOtpSuperAdmin = async (req, res) => {
                 email: user.email,
                 mobile: user.mobile
             }
-        });
+        };
 
-        await redis.set(key, dataToStore, "EX", 300);
+        await redis.set(key, JSON.stringify(dataToStore), "EX", 300);
+
+        const stored = await redis.get(key);
+        console.log("Redis JSON ===", JSON.parse(stored));
+        console.log("typeof====", typeof dataToStore, dataToStore);
 
         return res.json({
             message: `OTP sent successfully to ${user.email} for ${reason}`,
@@ -125,12 +128,13 @@ export const superAdminLogin = async (req, res) => {
         await redis.set(`auth:tokens:${user.id}`, token, "EX", 3600);
         await redis.set(`auth:map:${uuid}`, encryptedKey, "EX", 3600);
 
+
         return res.json({
             message: "Login successful",
             uuid,
-            superAdmin,
-            user
+            ...superAdmin
         });
+
     } catch (err) {
         console.error("Login Error:", err);
         return res.status(500).json({ message: "Server error", error: err.message });

@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../dbs/connection.js";
+import { sequelize } from "../configs/connection.js";
 
 const SuperAdmin = sequelize.define("SuperAdmin", {
     super_admin_id: {

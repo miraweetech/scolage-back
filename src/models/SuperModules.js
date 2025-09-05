@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../dbs/connection.js";
+import { sequelize } from "../configs/connection.js";
 
 const SuperModules = sequelize.define("SuperModules", {
     super_module_id: {
@@ -8,10 +8,12 @@ const SuperModules = sequelize.define("SuperModules", {
         autoIncrement: true
     },
     module_name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        // unique: true
     },
     path: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        unique: true
     },
     module_id: {
         type: DataTypes.INTEGER,

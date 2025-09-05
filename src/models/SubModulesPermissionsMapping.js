@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../dbs/connection.js";
+import { sequelize } from "../configs/connection.js";
 
 const SubModulesPermissionsMapping = sequelize.define("SubModulesPermissionsMapping", {
     sub_modules_permissions_mapping_id: {

@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../dbs/connection.js";
+import { sequelize } from "../configs/connection.js";
 
 const UserSuperMappings = sequelize.define("UserSuperMappings", {
     user_super_mappings_id: {

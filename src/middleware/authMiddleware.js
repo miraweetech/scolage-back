@@ -1,10 +1,10 @@
-// import redis from "../dbs/redisConnection.js";
-// import Cryptr from "cryptr";
-// import dotenv from "dotenv";
+import redis from "../configs/redisConnection.js";
+import Cryptr from "cryptr";
+import dotenv from "dotenv";
 
-// dotenv.config();
+dotenv.config();
+const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
 
-// const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
 // export const authMiddleware = async (req, res, next) => {
 //     try {
 //         const { uuid } = req.headers;
@@ -23,20 +23,13 @@
 //     }
 // };
 
-import redis from "../dbs/redisConnection.js";
-import Cryptr from "cryptr";
-import dotenv from "dotenv";
-
-dotenv.config();
-const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
-
 export const authMiddleware = async (req, res, next) => {
     try {
         let uuid = null;
 
         const authHeader = req.headers["authorization"];
         if (authHeader && authHeader.startsWith("Bearer ")) {
-            uuid = authHeader.split(" ")[1]; 
+            uuid = authHeader.split(" ")[1];
         } else if (req.headers.uuid) {
             uuid = req.headers.uuid;
         }
@@ -51,7 +44,6 @@ export const authMiddleware = async (req, res, next) => {
         }
 
         const userId = cryptr.decrypt(encryptedUserId);
-
         req.userId = userId;
         next();
     } catch (err) {
