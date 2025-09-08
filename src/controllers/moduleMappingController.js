@@ -1,4 +1,4 @@
-import {UserModuleMappings, Modules, SuperModules, InstituteModules, UserSuperMappings, UserInstituteMappings} from "../models/index.js";
+import { UserModuleMappings, Modules, SuperModules, InstituteModules, UserSuperMappings, UserInstituteMappings, SubModules, SubModulesPermissionsMapping, PermissionType } from "../models/index.js";
 
 // Create permission mapping
 export const assignModulePermission = async (req, res) => {
@@ -66,3 +66,54 @@ export const assignModulePermission = async (req, res) => {
   }
 };
 
+export const assignSubModulePermission = async (req, res) => {
+  try {
+    const { user_id, module_id, sub_module_id, permission_type_id } = req.body;
+
+    const userModule = await UserModuleMappings.findOne({
+      where: { user_id, module_id, is_deleted: false }
+    });
+
+    if (!userModule) {
+      return res.status(400).json({ message: "User does not have access to this module" });
+    }
+
+    const subModule = await SubModules.findOne({
+      where: { sub_module_id, module_id }
+    });
+
+    if (!subModule) {
+      return res.status(404).json({ message: "SubModule not found for this module" });
+    }
+
+    const permissionType = await PermissionType.findByPk(permission_type_id);
+
+    if (!permissionType) {
+      return res.status(404).json({ message: "Permission type not found" });
+    }
+
+    const existingMapping = await SubModulesPermissionsMapping.findOne({
+      where: { user_id, module_id, sub_module_id, permission_type_id }
+    });
+
+    if (existingMapping) {
+      return res.status(400).json({ message: "Permission already assigned for this submodule" });
+    }
+
+    const newMapping = await SubModulesPermissionsMapping.create({
+      user_id,
+      module_id,
+      sub_module_id,
+      permission_type_id
+    });
+
+    res.status(201).json({
+      message: "SubModule permission assigned successfully",
+      data: newMapping
+    });
+
+  } catch (error) {
+    console.error("Error in assignSubModulePermission:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};

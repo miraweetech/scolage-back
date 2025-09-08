@@ -13,7 +13,7 @@ const SubModulesPermissionsMapping = sequelize.define("SubModulesPermissionsMapp
     module_id: {
         type: DataTypes.INTEGER,
     },
-    sub_module_permissions_id: {
+    sub_module_id: {
         type: DataTypes.INTEGER,
     },
     permission_type_id: {

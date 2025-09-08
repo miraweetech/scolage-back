@@ -1,27 +1,40 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
-const options = {
+export const config = {
   definition: {
-    openapi: "3.0.0", 
+    openapi: "3.0.0",
     info: {
-      title: "My Express API",
+      title: "API Documentation",
       version: "1.0.0",
-      description: "API documentation for my project",
+      description: "REST API documentation for the application",
     },
     servers: [
       {
         url: "http://localhost:7000/v1", 
       },
     ],
+    // components: {
+    //   securitySchemes: {
+    //     bearerAuth: {
+    //       type: "http",
+    //       scheme: "bearer",
+    //       bearerFormat: "JWT",
+    //     },
+    //   },
+    // },
+    // security: [
+    //   {
+    //     bearerAuth: [],
+    //   },
+    // ],
   },
-  apis: ["./src/routes/*.js"], 
+
+  apis: ["./routers/*.js", "./apis/*.js"],
 };
 
-const swaggerSpec = swaggerJsdoc(options);
-function swaggerDocs(app) {
-  app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-  console.log("✅ Swagger docs available at http://localhost:7000/api");
+export function swaggerDocs(app) {
+  const swaggerSpec = swaggerJsdoc(config);
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  console.log("✅ Swagger docs available at http://localhost:7000/api-docs");
 }
-
-export default swaggerDocs;

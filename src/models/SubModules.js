@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const SubModulesPermissions = sequelize.define("SubModulesPermissions", {
-    sub_module_permissions_id: {
+const SubModules = sequelize.define("subModules", {
+    sub_module_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -33,8 +33,8 @@ const SubModulesPermissions = sequelize.define("SubModulesPermissions", {
         type: DataTypes.INTEGER
     }
 }, {
-    tableName: "sub_modules_permissions",
+    tableName: "sub_modules",
     timestamps: false
 })
 
-export default SubModulesPermissions;
+export default SubModules;

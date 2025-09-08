@@ -1,6 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
+
+
 const PermissionType = sequelize.define("PermissionType", {
     permission_type_id: {
         type: DataTypes.INTEGER,
@@ -8,12 +10,15 @@ const PermissionType = sequelize.define("PermissionType", {
         autoIncrement: true
     },
     title: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM(["write", "read"])
     },
     can_edit: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-    }
+    },
+    created_by: {
+        type: DataTypes.INTEGER,
+    },
 }, {
     tableName: "permission_types",
     timestamps: false

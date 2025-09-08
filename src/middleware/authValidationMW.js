@@ -1,10 +1,23 @@
-import { Modules, SuperAdmin, SuperModules, User, UserModuleMappings, UserSuperMappings } from "../models/index.js";
+import {
+    Modules,
+    SuperAdmin,
+    SuperModules,
+    User,
+    UserModuleMappings,
+    UserSuperMappings,
+    SubModulesPermissionsMapping,
+    SubModules,
+    PermissionType
+} from "../models/index.js";
+
+import _ from "lodash";
 
 export const authValidationMW = async (req, res, next) => {
     try {
         const { email, mobile } = req.body;
         let user = null;
 
+        // Find user by email or mobile
         if (email) {
             user = await User.findOne({ where: { email } });
         } else if (mobile) {
@@ -17,6 +30,7 @@ export const authValidationMW = async (req, res, next) => {
             return res.status(404).json({ message: "User does not exist" });
         }
 
+        // Fetch mapping with SuperAdmin
         const mapping = await UserSuperMappings.findOne({
             where: { user_id: user.id },
             include: [
@@ -37,6 +51,7 @@ export const authValidationMW = async (req, res, next) => {
             return res.status(404).json({ message: "SuperAdmin does not exist" });
         }
 
+        // Fetch modules + superModules + subModules
         const modulesAccessRaw = await UserModuleMappings.findAll({
             where: { user_id: user.id, is_deleted: false },
             include: [
@@ -54,8 +69,27 @@ export const authValidationMW = async (req, res, next) => {
                     include: [
                         {
                             model: SuperModules,
-                            as: "superModules",  
+                            as: "superModules",
                             attributes: ["module_name", "path"]
+                        },
+                        {
+                            model: SubModulesPermissionsMapping,
+                            as: "subModulesPermissionsMappings",
+                            attributes: [
+                                "sub_modules_permissions_mapping_id",
+                            ],
+                            include: [
+                                {
+                                    model: SubModules,
+                                    as: "subModules",
+                                    attributes: ["sub_module_id", "title"]
+                                },
+                                {
+                                    model: PermissionType,
+                                    as: 'permissionType',
+                                    attributes: ['title', 'can_edit']
+                                }
+                            ]
                         }
                     ]
                 }
@@ -76,9 +110,29 @@ export const authValidationMW = async (req, res, next) => {
             is_active: item.module.is_active,
             status: item.module.status,
             module_name: item.module.superModules?.module_name || null,
-            path: item.module.superModules?.path || null
+            path: item.module.superModules?.path || null,
+            subModule: item.module.subModulesPermissionsMappings
+                ? {
+                    sub_modules_permissions_ma: item.module.subModulesPermissionsMappings.sub_modules_permissions_mapping_id,
+                    subModules: item.module.subModulesPermissionsMappings.subModules || null,
+                    permissionType: item.module.subModulesPermissionsMappings.permissionType || null
+                }
+                : null
         }));
 
+        // Group submodules per module_id
+        const groupedModules = _(modulesAccess)
+            .groupBy("module_id")
+            .map(values => {
+                const base = { ...values[0] };
+                base.subModule = values
+                    .map(v => v.subModule)
+                    .filter(Boolean); // collect all subModules
+                return base;
+            })
+            .value();
+
+        // Attach to req
         req.superAdmin = {
             fname: mapping.superAdmin.fname,
             lname: mapping.superAdmin.lname,
@@ -86,7 +140,7 @@ export const authValidationMW = async (req, res, next) => {
             profile_image: mapping.superAdmin.profile_image,
             email: mapping.user.email,
             mobile: mapping.user.mobile,
-            modules: modulesAccess
+            modules: groupedModules
         };
 
         req.user = user;
@@ -97,3 +151,4 @@ export const authValidationMW = async (req, res, next) => {
         return res.status(500).json({ message: "Server error", error: err.message });
     }
 };
+

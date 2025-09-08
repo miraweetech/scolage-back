@@ -1,4 +1,5 @@
-import { InstituteAdmin, InstituteModules, Modules, User, UserInstituteMappings, UserModuleMappings } from "../models/index.js";
+import { InstituteAdmin, InstituteModules, Modules, PermissionType, SubModules, SubModulesPermissionsMapping, User, UserInstituteMappings, UserModuleMappings } from "../models/index.js";
+import _ from "lodash";
 
 export const instituteAuthValidationMW = async (req, res, next) => {
     try {
@@ -55,6 +56,25 @@ export const instituteAuthValidationMW = async (req, res, next) => {
                         {
                             model: InstituteModules,
                             as: "instituteModules",
+                        },
+                        {
+                            model: SubModulesPermissionsMapping,
+                            as: "subModulesPermissionsMappings",
+                            attributes: [
+                                "sub_modules_permissions_mapping_id",
+                            ],
+                            include: [
+                                {
+                                    model: SubModules,
+                                    as: "subModules",
+                                    attributes: ["sub_module_id", "title"]
+                                },
+                                {
+                                    model: PermissionType,
+                                    as: 'permissionType',
+                                    attributes: ['title', 'can_edit']
+                                }
+                            ]
                         }
                     ]
                 }
@@ -74,8 +94,26 @@ export const instituteAuthValidationMW = async (req, res, next) => {
             is_active: item.module.is_active,
             status: item.module.status,
             module_name: item.module.instituteModules?.module_name || null,
-            path: item.module.instituteModules?.path || null
+            path: item.module.instituteModules?.path || null,
+            subModule: item.module.subModulesPermissionsMappings
+                ? {
+                    sub_modules_permissions_ma: item.module.subModulesPermissionsMappings.sub_modules_permissions_mapping_id,
+                    subModules: item.module.subModulesPermissionsMappings.subModules || null,
+                    permissionType: item.module.subModulesPermissionsMappings.permissionType || null
+                }
+                : null
         }));
+
+        const groupedModules = _(modulesAccess)
+            .groupBy("module_id")
+            .map(values => {
+                const base = { ...values[0] };
+                base.subModule = values
+                    .map(v => v.subModule)
+                    .filter(Boolean);
+                return base;
+            })
+            .value();
 
         req.instituteAdmin = {
             fname: mapping.instituteAdmin.fname,
@@ -86,7 +124,7 @@ export const instituteAuthValidationMW = async (req, res, next) => {
             dob: mapping.instituteAdmin.dob,
             email: mapping.user.email,
             mobile: mapping.user.mobile,
-            modules: modulesAccess
+            modules: groupedModules
         };
 
         req.user = user;
