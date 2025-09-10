@@ -1,29 +1,24 @@
 import express from "express";
 import { authMiddleware } from "../middleware/authMiddleware.js";
-import {
-  createArea,
-  deleteArea,
-  getAllArea,
-  getAreaById,
-  updateArea,
-} from "../controllers/areaControllers.js";
+import { createSectorType, deleteSectorType, getAllSectorTypes, getSectorTypeById, updateSectorType } from "../controllers/sectorTypeController.js";
 
-const areaApis = express.Router();
-areaApis.use(authMiddleware);
+const sectorType = express.Router();
+
+sectorType.use(authMiddleware);
 
 /**
  * @swagger
  * tags:
- *   - name: Areas
- *     description: Area management APIs
+ *   - name: Sector Types
+ *     description: Manage sector types
  */
 
 /**
  * @swagger
- * /v1/area:
+ * /sector-type:
  *   post:
- *     summary: Create a new area
- *     tags: [Areas]
+ *     summary: Create a new sector type
+ *     tags: [Sector Types]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -35,36 +30,32 @@ areaApis.use(authMiddleware);
  *             properties:
  *               name:
  *                 type: string
- *                 example: Navrangpura
- *               city_id:
- *                 type: integer
- *                 example: 2
  *     responses:
- *       201:
- *         description: Area created successfully
+ *       200:
+ *         description: Sector type created
  */
-areaApis.post("/", createArea);
+sectorType.post("/", createSectorType);
 
 /**
  * @swagger
- * /v1/area:
+ * /sector-type:
  *   get:
- *     summary: Get all areas
- *     tags: [Areas]
+ *     summary: Get all sector types
+ *     tags: [Sector Types]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: List of areas
+ *         description: List of sector types
  */
-areaApis.get("/", getAllArea);
+sectorType.get("/", getAllSectorTypes);
 
 /**
  * @swagger
- * /v1/area/{id}:
+ * /sector-type/{id}:
  *   get:
- *     summary: Get area by ID
- *     tags: [Areas]
+ *     summary: Get sector type by ID
+ *     tags: [Sector Types]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -73,21 +64,20 @@ areaApis.get("/", getAllArea);
  *         required: true
  *         schema:
  *           type: integer
- *         example: 1
  *     responses:
  *       200:
- *         description: Area details
+ *         description: Sector type found
  *       404:
- *         description: Area not found
+ *         description: Not found
  */
-areaApis.get("/:id", getAreaById);
+sectorType.get("/:id", getSectorTypeById) ;
 
 /**
  * @swagger
- * /v1/area/{id}:
- *   patch:
- *     summary: Update area by ID
- *     tags: [Areas]
+ * /sector-type/{id}:
+ *   put:
+ *     summary: Update sector type
+ *     tags: [Sector Types]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -96,7 +86,6 @@ areaApis.get("/:id", getAreaById);
  *         required: true
  *         schema:
  *           type: integer
- *         example: 1
  *     requestBody:
  *       required: true
  *       content:
@@ -106,24 +95,20 @@ areaApis.get("/:id", getAreaById);
  *             properties:
  *               name:
  *                 type: string
- *                 example: Paldi
- *               city_id:
- *                 type: integer
- *                 example: 3
  *     responses:
  *       200:
- *         description: Area updated successfully
+ *         description: Sector type updated
  *       404:
- *         description: Area not found
+ *         description: Not found
  */
-areaApis.patch("/:id", updateArea);
+sectorType.patch("/:id", updateSectorType);
 
 /**
  * @swagger
- * /v1/area/{id}:
+ * /sector-type/{id}:
  *   delete:
- *     summary: Delete area by ID
- *     tags: [Areas]
+ *     summary: Delete sector type
+ *     tags: [Sector Types]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -132,13 +117,12 @@ areaApis.patch("/:id", updateArea);
  *         required: true
  *         schema:
  *           type: integer
- *         example: 1
  *     responses:
  *       200:
- *         description: Area deleted successfully
+ *         description: Sector type deleted
  *       404:
- *         description: Area not found
+ *         description: Not found
  */
-areaApis.delete("/:id", deleteArea);
+sectorType.delete("/:id", deleteSectorType);
 
-export default areaApis;
+export default sectorType;

@@ -1,30 +1,20 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const Modules = sequelize.define("Modules", {
-    module_id: {
+const InstituteEmailDetails = sequelize.define("InstituteEmailDetails", {
+    institute_emails_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    created_by: {
+    institute_id: {
         type: DataTypes.INTEGER,
     },
-    is_super: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+    institute_emails_type_id: {
+        type: DataTypes.INTEGER,
     },
-    is_institute: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-    },
-    is_active: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
-    },
-    status: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+    email: {
+        type: DataTypes.STRING,
     },
     created_at: {
         type: DataTypes.DATE,
@@ -34,13 +24,21 @@ const Modules = sequelize.define("Modules", {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
     },
-    as_submodule:{
+    isdisable: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    isdeleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    isvisible: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     }
 }, {
-    tableName: "modules",
+    tableName: "institute_email_details",
     timestamps: false
-});
+})
 
-export default Modules;
+export default InstituteEmailDetails

@@ -1,36 +1,39 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import path from "path";
+import { fileURLToPath } from "url";
 
-export const config = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const config = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "API Documentation",
+      title: "Scolage API Documentation",
       version: "1.0.0",
-      description: "REST API documentation for the application",
+      description: "REST API documentation for the Scolage application",
     },
     servers: [
       {
-        url: "http://localhost:7000/v1", 
+        url: "http://localhost:7000",
       },
     ],
-    // components: {
-    //   securitySchemes: {
-    //     bearerAuth: {
-    //       type: "http",
-    //       scheme: "bearer",
-    //       bearerFormat: "JWT",
-    //     },
-    //   },
-    // },
-    // security: [
-    //   {
-    //     bearerAuth: [],
-    //   },
-    // ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [{ bearerAuth: [] }],
   },
-
-  apis: ["./routers/*.js", "./apis/*.js"],
+  apis: [
+    path.join(__dirname, "../apis/*.js"),
+    path.join(__dirname, "../routers/*.js"),
+  ],
 };
 
 export function swaggerDocs(app) {

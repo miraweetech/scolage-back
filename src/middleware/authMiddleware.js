@@ -17,12 +17,12 @@ export const authMiddleware = async (req, res, next) => {
         }
 
         if (!uuid) {
-            return res.status(401).json({ message: "UUID required" });
+            return res.status(401).json({ message: "token required" });
         }
 
         const encryptedUserId = await redis.get(`auth:map:${uuid}`);
         if (!encryptedUserId) {
-            return res.status(401).json({ message: "Invalid or expired UUID" });
+            return res.status(401).json({ message: "Invalid or expired token" });
         }
 
         const userId = cryptr.decrypt(encryptedUserId);

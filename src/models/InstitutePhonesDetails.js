@@ -1,26 +1,17 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const AreaList = sequelize.define("AreaList", {
-    area_id: {
+const InstitutePhoneDetails = sequelize.define("InstitutePhoneDetails", {
+    institute_phone_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    city_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    state_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    created_by: {
+    phone_type: {
         type: DataTypes.STRING,
     },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
+    institute_id: {
+        type: DataTypes.INTEGER,
     },
     created_at: {
         type: DataTypes.DATE,
@@ -30,17 +21,20 @@ const AreaList = sequelize.define("AreaList", {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
     },
-    is_new: {
+    isdisable: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    isdeleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    isvisible: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
-    },
-    place_id: {
-        type: DataTypes.STRING,
-        // allowNull: true
     }
 }, {
-    tableName: "area_list",
+    tableName: "institute_phone_details",
     timestamps: false
-});
-
-export default AreaList;
+})
+export default InstitutePhoneDetails

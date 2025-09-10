@@ -26,6 +26,4 @@ const UserModuleMappings = sequelize.define("UserModuleMappings", {
     timestamps: false
 })
 
-// UserModuleMappings.belongsTo(sequelize.models.Modules, { foreignKey: "module_id", as: "module" });
-
 export default UserModuleMappings

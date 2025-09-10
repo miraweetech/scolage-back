@@ -1,34 +1,50 @@
 import { Op } from "sequelize";
-import { Modules, User, SuperModules, UserModuleMappings, InstituteModules } from "../models/index.js";
+import { Modules, User, SuperModules, UserModuleMappings, InstituteModules, UserSuperMappings, UserInstituteMappings } from "../models/index.js";
+import { sequelize } from "../configs/connection.js";
 
 // Create Module
 export const createModule = async (req, res) => {
+    const t = await sequelize.transaction();
     try {
-        const { created_by, is_super, is_institute, status, module_name, path } = req.body;
+        const created_by = req.userId;
+        const { status, module_name, path } = req.body;
 
         const user = await User.findByPk(created_by);
         if (!user) {
+            await t.rollback();
             return res.status(404).json({ message: "User not found" });
         }
 
+        let is_super = false;
+        let is_institute = false;
+
+        const superMapping = await UserSuperMappings.findOne({ where: { user_id: created_by } });
+        if (superMapping) {
+            is_super = true;
+        }
+
+        const instituteMapping = await UserInstituteMappings.findOne({ where: { user_id: created_by } });
+        if (instituteMapping) {
+            is_institute = true;
+        }
+
+        if (!is_super && !is_institute) {
+            await t.rollback();
+            return res.status(403).json({ message: "User is not authorized to create modules" });
+        }
+
         if (is_super) {
-            const exists = await SuperModules.findOne({
-                where: {
-                    [Op.or]: [{ path }]
-                }
-            });
+            const exists = await SuperModules.findOne({ where: { path } });
             if (exists) {
+                await t.rollback();
                 return res.status(400).json({ message: "Super module path already exists" });
             }
         }
 
         if (is_institute) {
-            const exists = await InstituteModules.findOne({
-                where: {
-                    [Op.or]: [{ path }]
-                }
-            });
+            const exists = await InstituteModules.findOne({ where: { path } });
             if (exists) {
+                await t.rollback();
                 return res.status(400).json({ message: "Institute module path already exists" });
             }
         }
@@ -38,7 +54,7 @@ export const createModule = async (req, res) => {
             is_super,
             is_institute,
             status
-        });
+        }, { transaction: t });
 
         let createdChildModule = null;
 
@@ -47,7 +63,7 @@ export const createModule = async (req, res) => {
                 module_name,
                 path,
                 module_id: createdModule.module_id
-            });
+            }, { transaction: t });
         }
 
         if (is_institute) {
@@ -55,18 +71,23 @@ export const createModule = async (req, res) => {
                 module_name,
                 path,
                 module_id: createdModule.module_id
-            });
+            }, { transaction: t });
         }
 
+        await t.commit();
+
         res.status(201).json({
-            message: "Module created successfully"
+            message: "Module created successfully",
+            module: createdModule,
+            childModule: createdChildModule
         });
 
     } catch (error) {
-        console.error(error);
+        await t.rollback();
+        console.error("Error creating module:", error);
         res.status(400).json({
             error: error.message,
-            details: error.errors
+            details: error.errors || null
         });
     }
 };
@@ -82,7 +103,7 @@ export const getAllModules = async (req, res) => {
                     attributes: ["id", "email", "mobile"]
                 },
                 { model: SuperModules, as: "superModules" },
-                {model: InstituteModules, as: "instituteModules" }
+                { model: InstituteModules, as: "instituteModules" }
             ]
         });
         res.status(200).json(modules);

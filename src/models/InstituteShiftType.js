@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const StateList = sequelize.define("StateList", {
-    state_id: {
+const InstituteShiftType = sequelize.define("InstituteShiftType", {
+    institute_shift_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -10,8 +10,13 @@ const StateList = sequelize.define("StateList", {
     created_by: {
         type: DataTypes.STRING
     },
-    name: {
-        type: DataTypes.STRING
+    isdeleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false 
+    },
+    idesable: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     },
     created_at: {
         type: DataTypes.DATE,
@@ -21,17 +26,15 @@ const StateList = sequelize.define("StateList", {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
     },
-    is_new: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+    starting_day: {
+        type: DataTypes.INTEGER
     },
-    place_id: {
-        type: DataTypes.STRING,
-        // allowNull: true
+    ending_day: {
+        type: DataTypes.INTEGER
     }
 }, {
-    tableName: "state_list",
+    tableName: "institute_shift_types",
     timestamps: false
-});
+})
 
-export default StateList;
+export default InstituteShiftType

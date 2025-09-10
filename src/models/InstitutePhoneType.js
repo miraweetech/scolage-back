@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const StateList = sequelize.define("StateList", {
-    state_id: {
+const InstitutePhoneType = sequelize.define("InstitutePhoneType", {
+    institute_phone_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -10,8 +10,16 @@ const StateList = sequelize.define("StateList", {
     created_by: {
         type: DataTypes.STRING
     },
-    name: {
+    title: {
         type: DataTypes.STRING
+    },
+    isdisable: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    isdeleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     },
     created_at: {
         type: DataTypes.DATE,
@@ -20,18 +28,10 @@ const StateList = sequelize.define("StateList", {
     modified_at: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
-    },
-    is_new: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
-    },
-    place_id: {
-        type: DataTypes.STRING,
-        // allowNull: true
     }
 }, {
-    tableName: "state_list",
+    tableName: "institute_phone_type",
     timestamps: false
-});
+})
 
-export default StateList;
+export default InstitutePhoneType;

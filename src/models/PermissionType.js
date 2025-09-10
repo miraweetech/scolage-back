@@ -1,8 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-
-
 const PermissionType = sequelize.define("PermissionType", {
     permission_type_id: {
         type: DataTypes.INTEGER,

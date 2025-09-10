@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const StateList = sequelize.define("StateList", {
-    state_id: {
+const InstituteSystemType = sequelize.define("InstituteSystemType", {
+    institute_system_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -21,17 +21,16 @@ const StateList = sequelize.define("StateList", {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
     },
-    is_new: {
+    isdisable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true
+        defaultValue: false
     },
-    place_id: {
-        type: DataTypes.STRING,
-        // allowNull: true
+    isdeleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, {
-    tableName: "state_list",
+    tableName: "institute_system_type",
     timestamps: false
-});
-
-export default StateList;
+})
+export default InstituteSystemType

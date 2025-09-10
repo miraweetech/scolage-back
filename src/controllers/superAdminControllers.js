@@ -79,7 +79,8 @@ export const sendOtpSuperAdmin = async (req, res) => {
         console.log("Redis JSON ===", JSON.parse(stored));
         console.log("typeof====", typeof dataToStore, dataToStore);
 
-        return res.json({
+        return res.status(200).json({
+            status: "success",
             message: `OTP sent successfully to ${user.email} for ${reason}`,
             reason
         });
@@ -129,7 +130,7 @@ export const superAdminLogin = async (req, res) => {
         await redis.set(`auth:map:${uuid}`, encryptedKey, "EX", 3600);
 
 
-        return res.json({
+        return res.status(200).json({
             message: "Login successful",
             uuid,
             ...superAdmin

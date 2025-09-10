@@ -29,6 +29,10 @@ const CityList = sequelize.define("CityList", {
     is_new: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
+    },
+    place_id: {
+        type: DataTypes.STRING,
+        // allowNull: true
     }
 }, {
     tableName: "city_list",

@@ -1,30 +1,22 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const Modules = sequelize.define("Modules", {
-    module_id: {
+const InstituteShiftDetails = sequelize.define("InstituteShiftDetails", {
+    institute_shift_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    created_by: {
+    institute_id: {
         type: DataTypes.INTEGER,
     },
-    is_super: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
-    },
-    is_institute: {
+    isdisable: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
-    is_active: {
+    isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true
-    },
-    status: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+        defaultValue: false
     },
     created_at: {
         type: DataTypes.DATE,
@@ -34,13 +26,18 @@ const Modules = sequelize.define("Modules", {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
     },
-    as_submodule:{
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
+    institute_shift_type_id: {
+        type: DataTypes.INTEGER,
+    },
+    starting_hours: {
+        type: DataTypes.TIME,
+    },
+    ending_hours: {
+        type: DataTypes.TIME,
     }
 }, {
-    tableName: "modules",
-    timestamps: false
+    tableName: "institute_shift_details",
+    timestamps: true,
 });
 
-export default Modules;
+export default InstituteShiftDetails;
