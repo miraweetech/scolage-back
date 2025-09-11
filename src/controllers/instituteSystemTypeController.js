@@ -24,8 +24,26 @@ export const createInstituteSystemType = async (req, res) => {
 
 export const getAllInstituteSystemType = async (req, res) => {
     try {
-        const instituteSystemTypes = await InstituteSystemType.findAll();
-        return res.status(200).json({ data: instituteSystemTypes });
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
+
+        const { rows: instituteSystemTypes, count } = await InstituteSystemType.findAndCountAll({
+            limit,
+            offset
+        });
+
+        if (!instituteSystemTypes.length) {
+            return res.status(404).json({ error: "No Institute System Types found" });
+        }
+
+        return res.json({
+            data: instituteSystemTypes,
+            totalItems: count,
+            currentPage: page,
+            totalPages: Math.ceil(count / limit),
+            pageSize: limit
+        });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }

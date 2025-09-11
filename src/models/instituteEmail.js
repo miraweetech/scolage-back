@@ -1,14 +1,11 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const InstituteShiftDetails = sequelize.define("InstituteShiftDetails", {
-    institute_shift_details_id: {
+const InstituteEmail = sequelize.define("InstituteEmail", {
+    institute_email_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
-    },
-    institute_shift_id: {
-        type: DataTypes.INTEGER,
     },
     isdisable: {
         type: DataTypes.BOOLEAN,
@@ -26,18 +23,9 @@ const InstituteShiftDetails = sequelize.define("InstituteShiftDetails", {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
     },
-    institute_shift_type_id: {
-        type: DataTypes.INTEGER,
-    },
-    starting_hours: {
-        type: DataTypes.TIME,
-    },
-    ending_hours: {
-        type: DataTypes.TIME,
-    }
 }, {
-    tableName: "institute_shift_details",
-    timestamps: true,
+    tableName: "institute_email",
+    timestamps: true
 });
 
-export default InstituteShiftDetails;
+export default InstituteEmail;

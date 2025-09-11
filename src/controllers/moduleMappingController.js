@@ -1,11 +1,15 @@
 import { UserModuleMappings, Modules, SuperModules, InstituteModules, UserSuperMappings, UserInstituteMappings, SubModules, SubModulesPermissionsMapping, PermissionType } from "../models/index.js";
 
-// Create permission mapping
 export const assignModulePermission = async (req, res) => {
   try {
-    const { user_id, module_id } = req.body;
 
-    // Check if module exists
+    const user_id = req.userId
+    const { module_id } = req.body;
+
+    if (!user_id) {
+      return res.status(401).json({ message: "Unauthorized: user_id not found in token" });
+    }
+
     const module = await Modules.findByPk(module_id, {
       include: [
         { model: SuperModules, as: "superModules" },
@@ -17,7 +21,6 @@ export const assignModulePermission = async (req, res) => {
       return res.status(404).json({ message: "Module not found" });
     }
 
-    // Resolve user role
     const isSuperAdmin = await UserSuperMappings.findOne({ where: { user_id } });
     const isInstituteAdmin = await UserInstituteMappings.findOne({ where: { user_id } });
 
@@ -25,34 +28,25 @@ export const assignModulePermission = async (req, res) => {
       return res.status(404).json({ message: "User not found in SuperAdmin or InstituteAdmin mappings" });
     }
 
-    // Module type
     const isSuperModule = module.superModules && module.superModules.length > 0;
     const isInstituteModule = module.instituteModules && module.instituteModules.length > 0;
 
-    //  SuperModule
-    if (isSuperModule) {
-      if (!isSuperAdmin) {
-        return res.status(400).json({ message: "Only SuperAdmins can be assigned SuperModules" });
-      }
+    if (isSuperModule && !isSuperAdmin) {
+      return res.status(400).json({ message: "Only SuperAdmins can be assigned SuperModules" });
     }
 
-    // InstituteModule
-    if (isInstituteModule) {
-      if (!isInstituteAdmin) {
-        return res.status(400).json({ message: "Only InstituteAdmins can be assigned InstituteModules" });
-      }
+    if (isInstituteModule && !isInstituteAdmin) {
+      return res.status(400).json({ message: "Only InstituteAdmins can be assigned InstituteModules" });
     }
 
-    // Prevent duplicate
     const existingMapping = await UserModuleMappings.findOne({
       where: { user_id, module_id, is_deleted: false }
     });
 
     if (existingMapping) {
-      return res.status(400).json({ message: "Modules already assigned" });
+      return res.status(400).json({ message: "Module already assigned" });
     }
 
-    // Create mapping
     const mapping = await UserModuleMappings.create({ user_id, module_id });
 
     return res.status(201).json({
@@ -68,7 +62,8 @@ export const assignModulePermission = async (req, res) => {
 
 export const assignSubModulePermission = async (req, res) => {
   try {
-    const { user_id, module_id, sub_module_id, permission_type_id } = req.body;
+    const user_id = req.userId
+    const { module_id, sub_module_id, permission_type_id } = req.body;
 
     const userModule = await UserModuleMappings.findOne({
       where: { user_id, module_id, is_deleted: false }

@@ -7,7 +7,7 @@ const InstituteInfrastructureDetails = sequelize.define("InstituteInfrastructure
         primaryKey: true,
         autoIncrement: true
     },
-    institute_id: {
+    institute_infrastructure_id: {
         type: DataTypes.INTEGER,
     },
     infra_id: {

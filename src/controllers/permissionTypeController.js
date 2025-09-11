@@ -53,10 +53,28 @@ export const createPermissions = async (req, res) => {
 
 export const getAllPermission = async (req, res) => {
     try {
-        const data = await PermissionType.findAll()
-        res.json(data)
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const offset = (page - 1) * limit;
+
+      const { rows: data, count } = await PermissionType.findAndCountAll({
+          limit,
+          offset
+      });
+
+      if (!data.length) {
+          return res.status(404).json({ error: "No permissions found" });
+      }
+
+      return res.json({
+          data,
+          totalItems: count,
+          currentPage: page,
+          totalPages: Math.ceil(count / limit),
+          pageSize: limit
+      });
     } catch (error) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: error.message });
     }
 }
 

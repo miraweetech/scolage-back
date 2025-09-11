@@ -25,6 +25,9 @@ export const createCity = async (req, res) => {
 export const getAllCity = async (req, res) => {
     try {
         const { state, state_id } = req.query;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
 
         let whereCondition = {};
 
@@ -44,7 +47,7 @@ export const getAllCity = async (req, res) => {
             whereCondition.state_id = state_id;
         }
 
-        const cities = await CityList.findAll({
+        const { rows: cities, count } = await CityList.findAndCountAll({
             where: whereCondition,
             include: [
                 {
@@ -52,10 +55,22 @@ export const getAllCity = async (req, res) => {
                     as: "state",
                     attributes: ["state_id", "name"],
                 }
-            ]
+            ],
+            limit,
+            offset
         });
 
-        return res.json({ data: cities });
+        if (!cities.length) {
+            return res.status(404).json({ error: "No cities found" });
+        }
+
+        return res.json({
+            data: cities,
+            totalItems: count,
+            currentPage: page,
+            totalPages: Math.ceil(count / limit),
+            pageSize: limit
+        });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }

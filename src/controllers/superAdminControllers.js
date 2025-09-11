@@ -76,8 +76,6 @@ export const sendOtpSuperAdmin = async (req, res) => {
         await redis.set(key, JSON.stringify(dataToStore), "EX", 300);
 
         const stored = await redis.get(key);
-        console.log("Redis JSON ===", JSON.parse(stored));
-        console.log("typeof====", typeof dataToStore, dataToStore);
 
         return res.status(200).json({
             status: "success",

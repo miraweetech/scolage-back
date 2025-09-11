@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
 const InstitutePrimaryDetails = sequelize.define("InstitutePrimaryDetails", {  
-    id: {
+    institute_primary_details_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -47,7 +47,7 @@ const InstitutePrimaryDetails = sequelize.define("InstitutePrimaryDetails", {
     tld: {
         type: DataTypes.STRING
     },
-    institute_type_id: {
+    institute_id: {
         type: DataTypes.INTEGER
     }
 }, {

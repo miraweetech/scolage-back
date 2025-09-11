@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
 const InstituteBasicDetails = sequelize.define("InstituteBasicDetails", {
-    id: {
+    institute_basic_details_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true

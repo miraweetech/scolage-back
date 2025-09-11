@@ -43,12 +43,29 @@ export const createInstituteType = async (req, res) => {
 
 export const getAllInstituteTypes = async (req, res) => {
     try {
-        const data = await InstituteType.findAll({
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
+
+        const { rows: data, count } = await InstituteType.findAndCountAll({
             // include: [
             //     { model: SuperAdmin, as: "creator", attributes: ["super_admin_id", "fname", "lname"] }
-            // ]
+            // ],
+            limit,
+            offset
         });
-        res.json(data);
+
+        if (!data.length) {
+            return res.status(404).json({ error: "No institute types found" });
+        }
+
+        return res.json({
+            data,
+            totalItems: count,
+            currentPage: page,
+            totalPages: Math.ceil(count / limit),
+            pageSize: limit
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

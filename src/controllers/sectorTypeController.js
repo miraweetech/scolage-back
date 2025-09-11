@@ -28,7 +28,7 @@ export const getAllSectorTypes = async (req, res) => {
     try {
         const sectorTypes = await SectorType.findAll();
         return res.status(200).json({
-            message: "Sector types retrieved",
+            // message: "Sector types retrieved",
             data: sectorTypes
         });
     } catch (error) {
@@ -46,7 +46,7 @@ export const getSectorTypeById = async (req, res) => {
             });
         }
         return res.status(200).json({
-            message: "Sector type retrieved",
+            // message: "Sector type retrieved",
             data: sectorType
         });
     } catch (error) {

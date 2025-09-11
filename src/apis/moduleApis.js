@@ -4,6 +4,7 @@ import {
   createModule,
   deleteModule,
   filterModules,
+  filterModulesByUser,
   getAllModules,
   getModuleById,
   updateModule,
@@ -82,6 +83,26 @@ moduleApis.get("/all", getAllModules);
  *         description: Filtered list of modules
  */
 moduleApis.get("/filter", filterModules);
+
+/**
+ * @swagger
+ * /v1/module/filter:
+ *   get:
+ *     summary: Filter modules
+ *     tags: [Modules]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: name
+ *         schema:
+ *           type: string
+ *         description: Filter modules by name
+ *     responses:
+ *       200:
+ *         description: Filtered list of modules
+ */
+moduleApis.get("/", filterModulesByUser);
 
 /**
  * @swagger

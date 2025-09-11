@@ -47,49 +47,67 @@ export const createSubModule = async (req, res) => {
 };
 
 export const getAllSubModule = async (req, res) => {
-    try {
-        const data = await SubModules.findAll()
-        res.json(data)
-    } catch (error) {
-        res.status(500).json({error: error.message})
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+
+    const { rows: data, count } = await SubModules.findAndCountAll({
+      limit,
+      offset
+    });
+
+    if (!data.length) {
+      return res.status(404).json({ error: "No submodules found" });
     }
+
+    return res.json({
+      data,
+      totalItems: count,
+      currentPage: page,
+      totalPages: Math.ceil(count / limit),
+      pageSize: limit
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
 }
 
 export const getByIdSubModule = async (req, res) => {
-    try {
-        const data = await SubModules.findByPk(req.params.id)
-        if(!data) {
-            res.status(404).json({message: "not found"})
-        }
-        res.json(data)
-    } catch (error) {
-        res.status(500).json({error: error.message})
+  try {
+    const data = await SubModules.findByPk(req.params.id)
+    if (!data) {
+      res.status(404).json({ message: "not found" })
     }
+    res.json(data)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
 }
 
 export const updateSubModule = async (req, res) => {
-    try {
-        const data = await SubModules.findByPk(req.params.id)
-        if(!data) {
-            res.status(500).json({message: "not found"})
-        }
-        await data.update(req.body)
-        res.json(data)
-    } catch (error) {
-        res.status(500).json({error: error.message})
+  try {
+    const data = await SubModules.findByPk(req.params.id)
+    if (!data) {
+      res.status(500).json({ message: "not found" })
     }
+    await data.update(req.body)
+    res.json(data)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
 }
 
 export const deleteSubModule = async (req, res) => {
-    try {
-        const data = await SubModules.findByPk(req.params.id)
-        if(!data){
-            res.status(404).json({message: 'not found'})
-        }
-        await data.destroy()
-        res.json({message: 'Deleted successfully'})
-    } catch (error) {
-        res.status(500).json({error: error.message})
+  try {
+    const data = await SubModules.findByPk(req.params.id)
+    if (!data) {
+      res.status(404).json({ message: 'not found' })
     }
+    await data.destroy()
+    res.json({ message: 'Deleted successfully' })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
 }
 

@@ -2,15 +2,15 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
 const InstitutePhoneDetails = sequelize.define("InstitutePhoneDetails", {
-    institute_phone_id: {
+    institute_phone_details_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    phone_type: {
-        type: DataTypes.STRING,
+    institute_phone_type_id: {
+        type: DataTypes.INTEGER,
     },
-    institute_id: {
+    institute_phone_id: {
         type: DataTypes.INTEGER,
     },
     created_at: {

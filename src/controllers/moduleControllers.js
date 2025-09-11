@@ -95,7 +95,12 @@ export const createModule = async (req, res) => {
 // Get All Modules
 export const getAllModules = async (req, res) => {
     try {
-        const modules = await Modules.findAll({
+        // Get page and limit from query params (default: page=1, limit=10)
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
+
+        const { rows: modules, count } = await Modules.findAndCountAll({
             include: [
                 {
                     model: User,
@@ -104,9 +109,20 @@ export const getAllModules = async (req, res) => {
                 },
                 { model: SuperModules, as: "superModules" },
                 { model: InstituteModules, as: "instituteModules" }
-            ]
+            ],
+            limit,
+            offset,
+            distinct: true
         });
-        res.status(200).json(modules);
+
+        res.status(200).json({
+            data: modules,
+            totalItems: count,
+            currentPage: page,
+            totalPages: Math.ceil(count / limit),
+            pageSize: limit
+
+        });
     } catch (error) {
         res.status(500).json({
             message: "Error fetching modules",
@@ -214,35 +230,54 @@ export const deleteModule = async (req, res) => {
 export const filterModules = async (req, res) => {
     try {
         const { type } = req.query; // "super" | "institute"
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
 
         if (!type) {
             return res.status(400).json({ message: "Please provide type (super or institute)" });
         }
 
         if (type === "super") {
-            const superModules = await SuperModules.findAll({
+            const { rows, count } = await SuperModules.findAndCountAll({
                 include: [
                     {
                         model: Modules,
                         as: "module",
                         include: [{ model: User, as: "creator", attributes: ["id", "email", "mobile"] }]
                     }
-                ]
+                ],
+                limit,
+                offset
             });
-            return res.status(200).json(superModules);
+            return res.status(200).json({
+                data: rows,
+                totalItems: count,
+                currentPage: page,
+                totalPages: Math.ceil(count / limit),
+                pageSize: limit
+            });
         }
 
         if (type === "institute") {
-            const instituteModules = await InstituteModules.findAll({
+            const { rows, count } = await InstituteModules.findAndCountAll({
                 include: [
                     {
                         model: Modules,
                         as: "module",
                         include: [{ model: User, as: "creator", attributes: ["id", "email", "mobile"] }]
                     }
-                ]
+                ],
+                limit,
+                offset
             });
-            return res.status(200).json(instituteModules);
+            return res.status(200).json({
+                data: rows,
+                totalItems: count,
+                currentPage: page,
+                totalPages: Math.ceil(count / limit),
+                pageSize: limit
+            });
         }
 
         return res.status(400).json({ message: "Invalid type. Use 'super' or 'institute'" });
@@ -250,6 +285,50 @@ export const filterModules = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             message: "Error filtering modules",
+            error: error.message
+        });
+    }
+};
+
+// Filter Modules by userId
+export const filterModulesByUser = async (req, res) => {
+    try {
+        const { userId } = req.query;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Please provide userId" });
+        }
+
+        const { rows, count } = await Modules.findAndCountAll({
+            where: { created_by: userId },
+            include: [
+                { model: SuperModules, as: "superModules" },
+                { model: InstituteModules, as: "instituteModules" },
+                { model: User, as: "creator", attributes: ["id", "email", "mobile"] }
+            ],
+            limit,
+            offset
+        });
+
+        if (!rows.length) {
+            return res.status(404).json({ message: "No modules found for this user" });
+        }
+
+        res.status(200).json({
+            message: "Modules fetched successfully",
+            data: rows,
+            totalItems: count,
+            currentPage: page,
+            totalPages: Math.ceil(count / limit),
+            pageSize: limit
+        });
+    } catch (error) {
+        console.error("Error filtering modules by user:", error);
+        res.status(500).json({
+            message: "Error filtering modules by user",
             error: error.message
         });
     }

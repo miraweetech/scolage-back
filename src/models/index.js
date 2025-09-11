@@ -34,6 +34,12 @@ import InstitutePhoneDetails from "./InstitutePhonesDetails.js";
 import InstituteEmailDetails from "./InstituteEmailsDetails.js";
 import InstituteCampusDetails from "./InstituteCampusDetails.js";
 import InstituteBasicDetails from "./InstituteBasicDetails.js";
+import InstituteEmail from "./instituteEmail.js";
+import InstituteHighlights from "./instituteHighlights.js";
+import InstituteInfrastructure from "./instituteInfrastructure.js";
+import InstitutePhone from "./institutePhone.js";
+import InstituteShift from "./instituteShift.js";
+import InstituteMapping from "./instituteMapping.js";
 
 // Modules.created_by → User.id
 Modules.belongsTo(User, { foreignKey: "created_by", as: "creator" });
@@ -63,9 +69,9 @@ SuperAdmin.hasMany(UserSuperMappings, { foreignKey: "super_admin_id", as: "userS
 SubModules.belongsTo(SuperAdmin, { foreignKey: "created_by", as: "creator" });
 SuperAdmin.hasMany(SubModules, { foreignKey: "created_by", as: "subModules" });
 
-// Institute.created_by → SuperAdmin.super_admin_id
-Institute.belongsTo(SuperAdmin, { foreignKey: "created_by", as: "creator" });
-SuperAdmin.hasMany(Institute, { foreignKey: "created_by", as: "institutes" });
+// Institute.created_by → User.id
+Institute.belongsTo(User, { foreignKey: "created_by", as: "creator" });
+User.hasMany(Institute, { foreignKey: "created_by", as: "institutes" });
 
 // InstituteType.created_by → SuperAdmin.super_admin_id
 InstituteType.belongsTo(SuperAdmin, { foreignKey: "created_by", as: "creator" });
@@ -123,7 +129,6 @@ SuperAdmin.hasMany(PermissionType, { foreignKey: "created_by", as: "permissions"
 StateList.belongsTo(User, { foreignKey: "created_by", as: "creator" });
 User.hasMany(StateList, { foreignKey: "created_by", as: "StateList" });
 
-
 // city.state_id -> state.state_id
 CityList.belongsTo(StateList, { foreignKey: "state_id", as: "state" });
 StateList.hasMany(CityList, { foreignKey: "state_id", as: "CityList" });
@@ -160,21 +165,67 @@ User.hasMany(InstituteAffiliateType, { foreignKey: "created_by", as: "instituteA
 InstituteEmailType.belongsTo(User, { foreignKey: "created_by", as: "creator" });
 User.hasMany(InstituteEmailType, { foreignKey: "created_by", as: "instituteEmailTypes" });
 
+// InstituteEmailDetails.institute_emails_type_id -> InstituteEmailType.institute_email_type_id
+InstituteEmailDetails.belongsTo(InstituteEmailType, {foreignKey: "institute_emails_type_id", as : "instituteEmailTypes"})
+InstituteEmailType.hasMany(InstituteEmailDetails, {foreignKey: "institute_emails_type_id", as: "instituteEmailDetails"})
+
+// InstituteEmail.institute_email_id -> InstituteEmailDetails.institute_email_id
+InstituteEmail.belongsTo(InstituteEmailDetails, {foreignKey: "institute_email_id", as: "instituteEmailDetails"})
+InstituteEmailDetails.hasMany(InstituteEmail, {foreignKey: "institute_email_id", as: "instituteEmail"})
+
 // InstituteHighlightsType.created_by -> User.id
 InstituteHighlightsType.belongsTo(User, { foreignKey: "created_by", as: "creator" });
 User.hasMany(InstituteHighlightsType, { foreignKey: "created_by", as: "instituteHighlightsTypes" });
+
+// InstituteHighlightsDetails.institute_highlights_type_id -> InstituteHighlightsType.institute_highlights_type_id
+// InstituteShiftDetails.belongsTo(InstituteHighlightsType, {foreignKey: "institute_highlights_type_id", as: "instituteHighlightsTypes"})
+// InstituteHighlightsType.hasMany(InstituteShiftDetails, {foreignKey: "institute_highlights_type_id", as: "instituteHighlightsDetails"})
+// InstituteHighlightsDetails.institute_highlights_type_id -> InstituteHighlightsType.institute_highlights_type_id
+InstituteHighlightsDetails.belongsTo(InstituteHighlightsType, { foreignKey: "institute_highlights_type_id", as: "instituteHighlightsType" });
+InstituteHighlightsType.hasMany(InstituteHighlightsDetails, { foreignKey: "institute_highlights_type_id", as: "instituteHighlightsDetails" });
+
+// InstituteHighlights.institute_highlight_id -> InstituteHighlightsDetails.institute_highlight_id
+InstituteHighlights.belongsTo(InstituteHighlightsDetails, {foreignKey: "institute_highlight_id", as: "instituteHighlightsDetails"})
+InstituteHighlightsDetails.hasMany(InstituteHighlights, {foreignKey: "institute_highlight_id", as: "instituteHighlights"})
 
 // InstituteInfrastructureType.created_by -> User.id
 InstituteInfrastructureType.belongsTo(User, { foreignKey: "created_by", as: "creator" });
 User.hasMany(InstituteInfrastructureType, { foreignKey: "created_by", as: "instituteInfrastructureTypes" });
 
+// InstituteInfrastructureDetails.infra_id -> InstituteInfrastructureType.infra_id
+InstituteInfrastructureDetails.belongsTo(InstituteInfrastructureType, {foreignKey: "infra_id", as: "instituteInfrastructureTypes"})
+InstituteInfrastructureType.hasMany(InstituteInfrastructureDetails, {foreignKey: "infra_id", as: "instituteInfrastructureDetails"})
+
+// InstituteInfrastructure.institute_infrastructure_id -> InstituteInfrastructureDetails.institute_infrastructure_id
+InstituteInfrastructure.belongsTo(InstituteInfrastructureDetails, {foreignKey: "institute_infrastructure_id", as: "instituteInfrastructureDetails"})
+InstituteInfrastructureDetails.hasMany(InstituteInfrastructure, {foreignKey: "institute_infrastructure_id", as: "instituteInfrastructure"})
+
 // InstitutePhoneType.created_by -> User.id
 InstitutePhoneType.belongsTo(User, { foreignKey: "created_by", as: "creator" });
 User.hasMany(InstitutePhoneType, { foreignKey: "created_by", as: "institutePhoneTypes" });
 
+// InstitutePhoneDetails.institute_phone_type_id -> InstitutePhoneTypes.institute_phone_type_id
+InstitutePhoneDetails.belongsTo(InstitutePhoneType, {foreignKey: "institute_phone_type_id", as: "institutePhoneTypes"})
+InstitutePhoneType.hasMany(InstitutePhoneDetails, {foreignKey: "institute_phone_type_id", as: "institutePhoneDetails"})
+
+//InstitutePhone.institute_phone_id -> InstitutePhoneDetails.institute_phone_id
+InstitutePhone.belongsTo(InstitutePhoneDetails, {foreignKey: "institute_phone_id", as: "institutePhoneDetails"})
+InstitutePhoneDetails.hasMany(InstitutePhone, {foreignKey: "institute_phone_id", as: "institutePhone"})
+
 // InstituteShiftType.created_by -> User.id
 InstituteShiftType.belongsTo(User, { foreignKey: "created_by", as: "creator" });
 User.hasMany(InstituteShiftType, { foreignKey: "created_by", as: "instituteShiftTypes" });
+
+// InstituteShiftDetails.institute_shift_type_id -> InstituteShiftType.institute_shift_type_id
+// InstituteShiftDetails.belongsTo(InstituteShiftType, {foreignKey: "institute_shift_type_id", as: "instituteShiftTypes"})
+// InstituteShiftType.hasMany(InstituteShiftDetails, {foreignKey: "institute_shift_type_id", as: "instituteShiftDetails"})
+// InstituteShiftDetails.institute_shift_type_id -> InstituteShiftType.institute_shift_type_id
+InstituteShiftDetails.belongsTo(InstituteShiftType, { foreignKey: "institute_shift_type_id", as: "instituteShiftType" });
+InstituteShiftType.hasMany(InstituteShiftDetails, { foreignKey: "institute_shift_type_id", as: "instituteShiftDetails" });
+
+//InstituteShift.institute_shift_id -> InstituteShiftDetails.institute_shift_id
+InstituteShift.belongsTo(InstituteShiftDetails, {foreignKey: "institute_shift_id", as: "instituteShiftDetails"})
+InstituteShiftDetails.hasMany(InstituteShift, {foreignKey: "institute_shift_id", as: "instituteShift"})
 
 // InstituteSystemType.created_by -> User.id
 InstituteSystemType.belongsTo(User, { foreignKey: "created_by", as: "creator" });
@@ -196,25 +247,9 @@ InstituteAcademicType.hasMany(InstitutePrimaryDetails, { foreignKey: "institute_
 InstitutePrimaryDetails.belongsTo(InstituteAffiliateType, { foreignKey: "institute_affiliate_type_id", as: "instituteAffiliateType" });
 InstituteAffiliateType.hasMany(InstitutePrimaryDetails, { foreignKey: "institute_affiliate_type_id", as: "institutePrimaryDetails" });
 
-//InstitutePrimaryDetails.institute_type_id -> InstituteType.institute_type_id
-InstitutePrimaryDetails.belongsTo(InstituteType, { foreignKey: "institute_type_id", as: "instituteType" });
-InstituteType.hasMany(InstitutePrimaryDetails, { foreignKey: "institute_type_id", as: "institutePrimaryDetails" });
-
-// InstituteHighlightsDetails.institute_id -> Institute.id
-InstituteHighlightsDetails.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
-Institute.hasMany(InstituteHighlightsDetails, { foreignKey: "institute_id", as: "InstituteHighlightsDetails" });
-
-//InstituteHighlightsDetails.institute_highlights_type_id -> InstituteHighlightsType.institute_highlights_type_id
-InstituteHighlightsDetails.belongsTo(InstituteHighlightsType, { foreignKey: "institute_highlights_type_id", as: "instituteHighlightsType" });
-InstituteHighlightsType.hasMany(InstituteHighlightsDetails, { foreignKey: "institute_highlights_type_id", as: "InstituteHighlightsDetails" });
-
-// InstituteInfrastructureDetails.institute_id -> Institute.id
-InstituteInfrastructureDetails.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
-Institute.hasMany(InstituteInfrastructureDetails, { foreignKey: "institute_id", as: "InstituteInfrastructureDetails" });
-
-// InstituteInfrastructureDetails.infra_id - > InstituteInfrastructureType.infra_id
-InstituteInfrastructureDetails.belongsTo(InstituteInfrastructureType, { foreignKey: "infra_id", as: "instituteInfrastructureType" });
-InstituteInfrastructureType.hasMany(InstituteInfrastructureDetails, { foreignKey: "infra_id", as: "InstituteInfrastructureDetails" });
+//InstitutePrimaryDetails.institute_type_id -> Institute.id
+InstitutePrimaryDetails.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
+Institute.hasMany(InstitutePrimaryDetails, { foreignKey: "institute_id", as: "institutePrimaryDetails" });
 
 // InstituteLocationsDetails.institute_id -> Institute.id
 InstituteLocationsDetails.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
@@ -232,37 +267,57 @@ CityList.hasMany(InstituteLocationsDetails, { foreignKey: "city_id", as: "Instit
 InstituteLocationsDetails.belongsTo(AreaList, { foreignKey: "area_id", as: "area" });
 AreaList.hasMany(InstituteLocationsDetails, { foreignKey: "area_id", as: "InstituteLocationsDetails" });
 
-//InstituteShiftDetails.institute_id -> Institute.id
-InstituteShiftDetails.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
-Institute.hasMany(InstituteShiftDetails, { foreignKey: "institute_id", as: "InstituteShiftDetails" });
-
-//InstituteShiftDetails.institute_shift_type_id -> InstituteShiftType.institute_shift_type_id
-InstituteShiftDetails.belongsTo(InstituteShiftType, { foreignKey: "institute_shift_type_id", as: "instituteShiftType" });
-InstituteShiftType.hasMany(InstituteShiftDetails, { foreignKey: "institute_shift_type_id", as: "InstituteShiftDetails" });
-
-//InstitutePhoneDetails.institute_id -> Institute.id
-InstitutePhoneDetails.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
-Institute.hasMany(InstitutePhoneDetails, { foreignKey: "institute_id", as: "InstitutePhoneDetails" });
-
-//InstituteEmailDetails.institute_id -> Institute.id
-InstituteEmailDetails.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
-Institute.hasMany(InstituteEmailDetails, { foreignKey: "institute_id", as: "InstituteEmailDetails" });
-
-//InstituteEmailDetails.institute_email_type_id -> InstituteEmailType.institute_email_type_id
-InstituteEmailDetails.belongsTo(InstituteEmailType, { foreignKey: "institute_email_type_id", as: "instituteEmailType" });
-InstituteEmailType.hasMany(InstituteEmailDetails, { foreignKey: "institute_email_type_id", as: "InstituteEmailDetails" });
-
 //InstituteCampusDetails.institute_id -> Institute.id
 InstituteCampusDetails.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
-Institute.hasMany(InstituteCampusDetails, { foreignKey: "institute_id", as: "InstituteCampusDetails" });
+Institute.hasMany(InstituteCampusDetails, { foreignKey: "institute_id", as: "campuses" });
 
 //InstituteCampusDetails.class_type_id -> ClassType.class_type_id
 InstituteCampusDetails.belongsTo(ClassType, { foreignKey: "class_type_id", as: "classType" });
-ClassType.hasMany(InstituteCampusDetails, { foreignKey: "class_type_id", as: "InstituteCampusDetails" });
+ClassType.hasMany(InstituteCampusDetails, { foreignKey: "class_type_id", as: "campuses" });
 
 //InstituteBasicDetails.institute_id -> Institute.id
 InstituteBasicDetails.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
 Institute.hasMany(InstituteBasicDetails, { foreignKey: "institute_id", as: "InstituteBasicDetails" });
+
+//InstituteMapping.institute_id -> Institute.id
+InstituteMapping.belongsTo(Institute, { foreignKey: "institute_id", as: "institute" });
+Institute.hasMany(InstituteMapping, { foreignKey: "institute_id", as: "instituteMapping" });
+
+// InstituteMapping.institute_phone_id -> InstitutePhone.institute_phone_id
+InstituteMapping.belongsTo(InstitutePhone, {foreignKey: "institute_phone_id", as: "institutePhone"})
+InstitutePhone.hasMany(InstituteMapping, {foreignKey: "institute_phone_id", as: "instituteMapping"})
+
+//InstituteMapping.institute_email_id -> InstituteEmail.institute_email_id
+InstituteMapping.belongsTo(InstituteEmail, {foreignKey: "institute_email_id", as: "instituteEmail"})
+InstituteEmail.hasMany(InstituteMapping, {foreignKey: "institute_email_id", as: "instituteMapping"})
+
+// InstituteMapping.institute_shift_id -> InstituteShift.institute_shift_id
+InstituteMapping.belongsTo(InstituteShift, {foreignKey: "institute_shift_id", as: "instituteShift"})
+InstituteShift.hasMany(InstituteMapping, {foreignKey: "institute_shift_id", as: "instituteMapping"})
+
+// InstituteMapping.institute_infrastructure_id -> InstituteInfrastructure.institute_infrastructure_id
+InstituteMapping.belongsTo(InstituteInfrastructure, {foreignKey: "institute_infrastructure_id", as: "instituteInfrastructure"})
+InstituteInfrastructure.hasMany(InstituteMapping, {foreignKey: "institute_infrastructure_id", as: "instituteMapping"})
+
+// InstituteMapping.institute_highlight_id -> InstituteHighlights.institute_highlight_id
+InstituteMapping.belongsTo(InstituteHighlights, {foreignKey: "institute_highlight_id", as: "instituteHighlights"})
+InstituteHighlights.hasMany(InstituteMapping, {foreignKey: "institute_highlight_id", as: "instituteMapping"})
+
+//InstituteMapping.institute_primary_details_id -> InstitutePrimaryDetails.institute_primary_details_id
+InstituteMapping.belongsTo(InstitutePrimaryDetails, {foreignKey: "institute_primary_details_id", as: "institutePrimaryDetails"})
+InstitutePrimaryDetails.hasMany(InstituteMapping, {foreignKey: "institute_primary_details_id", as: "instituteMapping"})
+
+//InstituteMapping.institute_campus_id -> InstituteCampusDetails.institute_campus_id
+InstituteMapping.belongsTo(InstituteCampusDetails, {foreignKey: "institute_campus_id", as: "campuses"})
+InstituteCampusDetails.hasMany(InstituteMapping, {foreignKey: "institute_campus_id", as: "instituteMapping"})
+
+//InstituteMapping.institute_basic_details_id -> InstituteBasicDetails.institute_basic_details_id
+InstituteMapping.belongsTo(InstituteBasicDetails, {foreignKey: "institute_basic_details_id", as: "InstituteBasicDetails"})
+InstituteBasicDetails.hasMany(InstituteMapping, {foreignKey: "institute_basic_details_id", as: "instituteMapping"})
+
+//InstituteMapping.institute_location_id -> InstituteLocationsDetails.institute_location_id
+InstituteMapping.belongsTo(InstituteLocationsDetails, {foreignKey: "institute_location_id", as: "InstituteLocationsDetails"})
+InstituteLocationsDetails.hasMany(InstituteMapping, {foreignKey: "institute_location_id", as: "instituteMapping"})
 
 export {
     User,
@@ -300,5 +355,11 @@ export {
     InstitutePhoneDetails,
     InstituteEmailDetails,
     InstituteCampusDetails,
-    InstituteBasicDetails
+    InstituteBasicDetails,
+    InstituteEmail,
+    InstituteHighlights,
+    InstitutePhone,
+    InstituteShift,
+    InstituteMapping,
+    InstituteInfrastructure
 };

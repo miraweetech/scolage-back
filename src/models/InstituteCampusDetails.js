@@ -19,6 +19,9 @@ const InstituteCampusDetails = sequelize.define("InstituteCampusDetails", {
     total_seats: {
         type: DataTypes.INTEGER
     },
+    collage_area: {
+        type: DataTypes.DECIMAL
+    },
     total_floors: {
         type: DataTypes.INTEGER
     },

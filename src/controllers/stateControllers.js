@@ -24,8 +24,26 @@ export const createState = async (req, res) => {
 
 export const getAllState = async (req, res) => {
     try {
-        const states = await StateList.findAll();
-        return res.json({ data: states });
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
+
+        const { rows: states, count } = await StateList.findAndCountAll({
+            limit,
+            offset
+        });
+
+        if (!states.length) {
+            return res.status(404).json({ error: "No states found" });
+        }
+
+        return res.json({
+            data: states,
+            totalItems: count,
+            currentPage: page,
+            totalPages: Math.ceil(count / limit),
+            pageSize: limit
+        });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }

@@ -25,6 +25,9 @@ export const createArea = async (req, res) => {
 export const getAllArea = async (req, res) => {
     try {
         const { city, city_id } = req.query;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
 
         let whereCondition = {};
 
@@ -44,7 +47,7 @@ export const getAllArea = async (req, res) => {
             whereCondition.city_id = city_id;
         }
 
-        const areas = await AreaList.findAll({
+        const { rows: areas, count } = await AreaList.findAndCountAll({
             where: whereCondition,
             include: [
                 {
@@ -52,9 +55,22 @@ export const getAllArea = async (req, res) => {
                     as: "city",
                     attributes: ["city_id", "name"],
                 }
-            ]
+            ],
+            limit,
+            offset
         });
-        return res.json({ data: areas });
+
+        if (!areas.length) {
+            return res.status(404).json({ error: "No areas found" });
+        }
+
+        return res.json({
+            data: areas,
+            totalItems: count,
+            currentPage: page,
+            totalPages: Math.ceil(count / limit),
+            pageSize: limit
+        });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }

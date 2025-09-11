@@ -2,12 +2,12 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
 const InstituteEmailDetails = sequelize.define("InstituteEmailDetails", {
-    institute_emails_id: {
+    institute_emails_details_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    institute_id: {
+    institute_email_id: {
         type: DataTypes.INTEGER,
     },
     institute_emails_type_id: {

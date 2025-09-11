@@ -30,7 +30,7 @@ export const getAllClassTypes = async (req, res) => {
     try {
         const classTypes = await ClassType.findAll();
         return res.status(200).json({
-            message: "Class types retrieved",
+            // message: "Class types retrieved",
             data: classTypes
         });
     } catch (error) {
@@ -52,7 +52,7 @@ export const getClassTypeById = async (req, res) => {
         }
 
         return res.status(200).json({
-            message: "Class type retrieved",
+            // message: "Class type retrieved",
             data: classType
         });
     } catch (error) {

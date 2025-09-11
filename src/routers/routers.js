@@ -14,6 +14,13 @@ import areaApis from "../apis/areaApis.js";
 import instituteSystemType from "../apis/instituteSystemType.js";
 import classTypeApis from "../apis/classTypeApis.js";
 import sectorType from "../apis/sectorTyeApis.js";
+import emailTypeApis from "../apis/emailTypeApis.js";
+import infrastructureTypeApis from "../apis/infrastructureTypeApis.js";
+import phoneTypeApis from "../apis/phoneTypeApis.js";
+import highlightsTypeApis from "../apis/highlightsTypeApis.js";
+import affiliateTypeApis from "../apis/affiliateTypeApis.js";
+import academicTypeApis from "../apis/academicTypeApis.js";
+import shiftTypeApis from "../apis/shiftType.js";
 
 const routers = express.Router();
 
@@ -37,6 +44,13 @@ routers.use("/area", areaApis);
 routers.use("/system-type", instituteSystemType);
 routers.use("/class-type", classTypeApis);
 routers.use("/sector-type", sectorType);
+routers.use("/email-type", emailTypeApis);
+routers.use("/infrastructure-type", infrastructureTypeApis);
+routers.use('/phone-type', phoneTypeApis)
+routers.use('/highlights-type', highlightsTypeApis)
+routers.use('/affiliate-type', affiliateTypeApis)
+routers.use('/academic-type', academicTypeApis)
+routers.use('/shift-type', shiftTypeApis)
 
 /**
  * @swagger
