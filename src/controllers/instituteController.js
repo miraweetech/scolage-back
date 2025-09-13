@@ -407,19 +407,20 @@ export const getAllInstitutes = async (req, res) => {
         const offset = (page - 1) * limit;
 
         const { rows: data, count } = await Institute.findAndCountAll({
+            distinct: true,
             include: [
                 { model: InstituteType, as: "instituteType" },
                 {
                     model: InstituteMapping,
                     as: "instituteMapping",
                     include: [
-                        { model: InstituteHighlights, as: "instituteHighlights", include: [{ model: InstituteHighlightsDetails, as: "instituteHighlightsDetails" }] },
-                        { model: InstituteInfrastructure, as: "instituteInfrastructure", include: [{ model: InstituteInfrastructureDetails, as: "instituteInfrastructureDetails" }] },
+                        { model: InstituteHighlights, as: "instituteHighlights", include: [{ model: InstituteHighlightsDetails, as: "details" }] },
+                        { model: InstituteInfrastructure, as: "instituteInfrastructure", include: [{ model: InstituteInfrastructureDetails, as: "details" }] },
                         { model: InstitutePhone, as: "institutePhone", include: [{ model: InstitutePhoneDetails, as: "institutePhoneDetails" }] },
                         { model: InstituteEmail, as: "instituteEmail", include: [{ model: InstituteEmailDetails, as: "instituteEmailDetails" }] },
-                        { model: InstituteShift, as: "instituteShift", include: [{ model: InstituteShiftDetails, as: "instituteShiftDetails" }] },
+                        { model: InstituteShift, as: "instituteShift", include: [{ model: InstituteShiftDetails, as: "details" }] },
                         { model: InstituteSocialMedia, as: "instituteSocialMedia", include: [{ model: InstituteSocialMediaDetails, as: "instituteSocialMediaDetails" }] },
-                        { model: InstituteYoutubeLink, as: "instituteYoutubeLink", include: [{ model: InstituteYoutubeLinkDetails, as: "instituteYoutubeLinkDetails" }] },
+                        { model: InstituteYoutubeLink, as: "instituteYoutubeLink", include: [{ model: InstituteYoutubeLinkDetails, as: "details" }] },
                         { model: InstitutePrimaryDetails, as: "institutePrimaryDetails" },
                         { model: InstituteCampusDetails, as: "campuse" },
                         { model: InstituteBasicDetails, as: "InstituteBasicDetails" },
@@ -471,15 +472,15 @@ export const getInstituteById = async (req, res) => {
                     model: InstituteMapping,
                     as: "instituteMapping",
                     include: [
-                        { model: InstituteHighlights, as: "instituteHighlights", include: [{ model: InstituteHighlightsDetails, as: "instituteHighlightsDetails" }] },
-                        { model: InstituteInfrastructure, as: "instituteInfrastructure", include: [{ model: InstituteInfrastructureDetails, as: "instituteInfrastructureDetails" }] },
+                        { model: InstituteHighlights, as: "instituteHighlights", include: [{ model: InstituteHighlightsDetails, as: "details" }] },
+                        { model: InstituteInfrastructure, as: "instituteInfrastructure", include: [{ model: InstituteInfrastructureDetails, as: "details" }] },
                         { model: InstitutePhone, as: "institutePhone", include: [{ model: InstitutePhoneDetails, as: "institutePhoneDetails" }] },
                         { model: InstituteEmail, as: "instituteEmail", include: [{ model: InstituteEmailDetails, as: "instituteEmailDetails" }] },
-                        { model: InstituteShift, as: "instituteShift", include: [{ model: InstituteShiftDetails, as: "instituteShiftDetails" }] },
+                        { model: InstituteShift, as: "instituteShift", include: [{ model: InstituteShiftDetails, as: "details" }] },
                         { model: InstituteSocialMedia, as: "instituteSocialMedia", include: [{ model: InstituteSocialMediaDetails, as: "instituteSocialMediaDetails" }] },
-                        { model: InstituteYoutubeLink, as: "instituteYoutubeLink", include: [{ model: InstituteYoutubeLinkDetails, as: "instituteYoutubeLinkDetails" }] },
+                        { model: InstituteYoutubeLink, as: "instituteYoutubeLink", include: [{ model: InstituteYoutubeLinkDetails, as: "details" }] },
                         { model: InstitutePrimaryDetails, as: "institutePrimaryDetails" },
-                        { model: InstituteCampusDetails, as: "campuses" },
+                        { model: InstituteCampusDetails, as: "campuse" },
                         { model: InstituteBasicDetails, as: "InstituteBasicDetails" },
                         { model: InstituteLocationsDetails, as: "InstituteLocationsDetails" },
                         {
