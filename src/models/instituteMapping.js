@@ -37,6 +37,15 @@ const InstituteMapping = sequelize.define("InstituteMapping", {
     institute_location_id: {
         type: DataTypes.INTEGER,
     },
+    institute_social_media_id: {
+        type: DataTypes.INTEGER
+    },
+    institute_youtube_link_id: {
+        type: DataTypes.INTEGER
+    },
+    institute_gallery_id: {
+        type: DataTypes.INTEGER
+    },
     isdisable: {
         type: DataTypes.BOOLEAN,
         defaultValue: false

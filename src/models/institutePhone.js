@@ -25,7 +25,7 @@ const InstitutePhone = sequelize.define("InstitutePhone", {
     },
 }, {
     tableName: "institute_phone",
-    timestamps: true
+    timestamps: false
 });
 
 export default InstitutePhone;

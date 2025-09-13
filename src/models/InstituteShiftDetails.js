@@ -37,7 +37,7 @@ const InstituteShiftDetails = sequelize.define("InstituteShiftDetails", {
     }
 }, {
     tableName: "institute_shift_details",
-    timestamps: true,
+    timestamps: false,
 });
 
 export default InstituteShiftDetails;

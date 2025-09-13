@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const InstituteInfrastructure = sequelize.define("InstituteInfrastructure", {
-    institute_infrastructure_id: {
+const InstituteGallery = sequelize.define("InstituteGallery", {
+    institute_gallery_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -24,8 +24,8 @@ const InstituteInfrastructure = sequelize.define("InstituteInfrastructure", {
         defaultValue: DataTypes.NOW
     },
 }, {
-    tableName: "institute_infrastructure",
+    tableName: "institute_gallery",
     timestamps: false
 });
 
-export default InstituteInfrastructure;
+export default InstituteGallery;

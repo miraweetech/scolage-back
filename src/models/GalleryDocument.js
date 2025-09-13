@@ -1,19 +1,20 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const InstituteInfrastructure = sequelize.define("InstituteInfrastructure", {
-    institute_infrastructure_id: {
+const GalleryDocument = sequelize.define("GalleryDocument", {
+    gallery_document_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    isdisable: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
+    gallery_id: {
+        type: DataTypes.INTEGER,
     },
-    isdeleted: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
+    url: {
+        type: DataTypes.STRING
+    },
+    media_type_id: {
+        type: DataTypes.INTEGER
     },
     created_at: {
         type: DataTypes.DATE,
@@ -24,8 +25,8 @@ const InstituteInfrastructure = sequelize.define("InstituteInfrastructure", {
         defaultValue: DataTypes.NOW
     },
 }, {
-    tableName: "institute_infrastructure",
+    tableName: "gallery_document",
     timestamps: false
 });
 
-export default InstituteInfrastructure;
+export default GalleryDocument;

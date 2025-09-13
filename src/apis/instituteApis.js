@@ -124,7 +124,7 @@ instituteApis.get("/:id", getInstituteById);
  *       404:
  *         description: Institute not found
  */
-instituteApis.put("/:id", updateInstitute);
+instituteApis.patch("/:id", updateInstitute);
 
 /**
  * @swagger

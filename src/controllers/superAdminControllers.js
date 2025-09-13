@@ -76,7 +76,7 @@ export const sendOtpSuperAdmin = async (req, res) => {
         await redis.set(key, JSON.stringify(dataToStore), "EX", 300);
 
         const stored = await redis.get(key);
-
+       console.log("Fetched OTP from Redis:", key, "=>", stored);
         return res.status(200).json({
             status: "success",
             message: `OTP sent successfully to ${user.email} for ${reason}`,

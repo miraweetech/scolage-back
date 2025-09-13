@@ -21,6 +21,9 @@ import highlightsTypeApis from "../apis/highlightsTypeApis.js";
 import affiliateTypeApis from "../apis/affiliateTypeApis.js";
 import academicTypeApis from "../apis/academicTypeApis.js";
 import shiftTypeApis from "../apis/shiftType.js";
+import socialMediaTypeApis from "../apis/socialMediaApis.js";
+import youtubeLinkTypeApis from "../apis/youtubeLinkType.js";
+import mediaTypeApis from "../apis/mediaTypeApis.js";
 
 const routers = express.Router();
 
@@ -51,6 +54,9 @@ routers.use('/highlights-type', highlightsTypeApis)
 routers.use('/affiliate-type', affiliateTypeApis)
 routers.use('/academic-type', academicTypeApis)
 routers.use('/shift-type', shiftTypeApis)
+routers.use('/social-media', socialMediaTypeApis)
+routers.use('/youtube-link', youtubeLinkTypeApis)
+routers.use('/media-type', mediaTypeApis)
 
 /**
  * @swagger

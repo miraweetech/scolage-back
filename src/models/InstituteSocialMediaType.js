@@ -1,17 +1,29 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const InstituteInfrastructure = sequelize.define("InstituteInfrastructure", {
-    institute_infrastructure_id: {
+const InstituteSocialMediaType = sequelize.define("InstituteSocialMediaType", {
+    institute_social_media_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    isdisable: {
+    created_by: {
+        type: DataTypes.STRING
+    },
+    rejex: {
+        type: DataTypes.STRING
+    },
+    icon_link: {
+        type: DataTypes.STRING
+    },
+    name: {
+        type: DataTypes.STRING
+    },
+    isdeleted: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
-    isdeleted: {
+    idesable: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
@@ -24,8 +36,8 @@ const InstituteInfrastructure = sequelize.define("InstituteInfrastructure", {
         defaultValue: DataTypes.NOW
     },
 }, {
-    tableName: "institute_infrastructure",
+    tableName: "institute_social_media_type",
     timestamps: false
-});
+})
 
-export default InstituteInfrastructure;
+export default InstituteSocialMediaType

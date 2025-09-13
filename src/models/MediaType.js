@@ -1,19 +1,24 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const InstituteInfrastructure = sequelize.define("InstituteInfrastructure", {
-    institute_infrastructure_id: {
+const MediaType = sequelize.define("MediaType", {
+    media_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    isdisable: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
+    name: {
+        type: DataTypes.STRING,
     },
-    isdeleted: {
+    mime_type: {
+        type: DataTypes.STRING
+    },
+    extension: {
+        type: DataTypes.STRING
+    },
+    is_prohibited: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: true
     },
     created_at: {
         type: DataTypes.DATE,
@@ -24,8 +29,8 @@ const InstituteInfrastructure = sequelize.define("InstituteInfrastructure", {
         defaultValue: DataTypes.NOW
     },
 }, {
-    tableName: "institute_infrastructure",
+    tableName: "media_type",
     timestamps: false
 });
 
-export default InstituteInfrastructure;
+export default MediaType;

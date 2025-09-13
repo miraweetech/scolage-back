@@ -25,7 +25,7 @@ const InstituteEmail = sequelize.define("InstituteEmail", {
     },
 }, {
     tableName: "institute_email",
-    timestamps: true
+    timestamps: false
 });
 
 export default InstituteEmail;

@@ -38,7 +38,7 @@ const InstituteHighlightsDetails = sequelize.define("InstituteHighlightsDetails"
     }
 }, {
     tableName: "institute_highlights_details",
-    timestamps: true
+    timestamps: false
 });
 
 export default InstituteHighlightsDetails;

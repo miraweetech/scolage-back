@@ -49,7 +49,7 @@ const InstituteLocationsDetails = sequelize.define("InstituteLocationsDetails", 
     }
 }, {
     tableName: "institute_locations_details",
-    timestamps: true,
+    timestamps: false,
 });
 
 export default InstituteLocationsDetails;
