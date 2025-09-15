@@ -1,23 +1,25 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, STRING } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const GalleryDocument = sequelize.define("GalleryDocument", {
-    gallery_document_id: {
+const DesignationType = sequelize.define("DesignationType", {
+    designation_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    gallery_id: {
-        type: DataTypes.INTEGER,
-    },
-    url: {
+    name: {
         type: DataTypes.STRING
     },
-    data: {
-        type: DataTypes.JSON
-    },
-    media_type_id: {
+    created_by: {
         type: DataTypes.INTEGER
+    },
+    isdisable: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    isdeleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     },
     created_at: {
         type: DataTypes.DATE,
@@ -28,8 +30,8 @@ const GalleryDocument = sequelize.define("GalleryDocument", {
         defaultValue: DataTypes.NOW
     },
 }, {
-    tableName: "gallery_document",
+    tableName: "designation_type",
     timestamps: false
 });
 
-export default GalleryDocument;
+export default DesignationType;

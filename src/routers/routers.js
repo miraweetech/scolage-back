@@ -24,6 +24,9 @@ import shiftTypeApis from "../apis/shiftType.js";
 import socialMediaTypeApis from "../apis/socialMediaApis.js";
 import youtubeLinkTypeApis from "../apis/youtubeLinkType.js";
 import mediaTypeApis from "../apis/mediaTypeApis.js";
+import QualificationTypeApi from "../apis/QualificationTypeApi.js";
+import DesignationTypeApi from "../apis/designationTypeApis.js";
+import SubjectTypeApi from "../apis/subjectTypeApis.js";
 
 const routers = express.Router();
 
@@ -57,6 +60,9 @@ routers.use('/shift-type', shiftTypeApis)
 routers.use('/social-media', socialMediaTypeApis)
 routers.use('/youtube-link', youtubeLinkTypeApis)
 routers.use('/media-type', mediaTypeApis)
+routers.use('/subject-type', SubjectTypeApi)
+routers.use('/qualification', QualificationTypeApi)
+routers.use('/designation', DesignationTypeApi)
 
 /**
  * @swagger

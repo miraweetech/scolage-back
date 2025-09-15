@@ -39,7 +39,19 @@ import {
     InstituteGallery,
     Gallery,
     MediaType,
-    GalleryDocument
+    GalleryDocument,
+    InstituteSubject,
+    SubjectType,
+    SubjectDetails,
+    EligibilityDetails,
+    InstituteStaffManagement,
+    DesignationType,
+    QualificationType,
+    StaffManagement,
+    InstituteImage,
+    InstituteImageDetails,
+    InstituteThreedImage,
+    InstituteThreedImageDetails
 } from "../models/index.js";
 
 export const createInstitute = async (req, res) => {
@@ -366,6 +378,103 @@ export const createInstitute = async (req, res) => {
             }
         }
 
+        // 14 Subject + Details
+        const subject = await InstituteSubject.create({}, { transaction: t });
+        if (req.body.subjectDetails?.length) {
+            for (const sh of req.body.subjectDetails) {
+                const subjectType = await SubjectType.findByPk(
+                    sh.subject_type_id
+                );
+                if (!subjectType)
+                    return res.status(404).json({ message: "subject type not found" });
+
+                await SubjectDetails.create(
+                    {
+                        institute_subject_id: subject.institute_subject_id,
+                        subject_type_id: sh.subject_type_id,
+                        description: sh.description,
+                        max_fee: sh.max_fee,
+                        min_fee: sh.min_fee,
+                        no_of_seats: sh.no_of_seats
+                    },
+                    { transaction: t }
+                );
+            }
+        }
+
+        // 15 eligibility Details
+        let eligibilityDetails = null;
+        if (req.body.eligibilityDetails) {
+            eligibilityDetails = await EligibilityDetails.create(
+                {
+                    ...req.body.eligibilityDetails,
+                },
+                { transaction: t }
+            );
+        }
+
+        // 16 staff management
+        const staffManagement = await InstituteStaffManagement.create({}, { transaction: t });
+        if (req.body.staffManagementDetails?.length) {
+            for (const sh of req.body.staffManagementDetails) {
+                const designationType = await DesignationType.findByPk(
+                    sh.designation_type_id
+                );
+                if (!designationType)
+                    return res.status(404).json({ message: "designation type not found" });
+
+                const qualificationType = await QualificationType.findByPk(
+                    sh.qualification_type_id
+                )
+                if (!qualificationType)
+                    return res.status(404).json({ message: "qualification type not found" })
+
+                await StaffManagement.create(
+                    {
+                        institute_staff_management_id: staffManagement.institute_staff_management_id,
+                        qualification_type_id: sh.qualification_type_id,
+                        designation_type_id: sh.designation_type_id,
+                        profile_picture_url: sh.profile_picture_url,
+                        name: sh.name,
+                        total_experience_years: sh.total_experience_years,
+                        current_experience_years: sh.current_experience_years,
+                        about: sh.about
+                    },
+                    { transaction: t }
+                );
+            }
+        }
+
+        // 17 InstituteImage
+        const instituteImage = await InstituteImage.create({}, { transaction: t })
+        if (req.body.instituteImage?.length) {
+            for (const sh of req.body.instituteImageDetails) {
+                await InstituteImageDetails.create(
+                    {
+                        institute_image_id: instituteImage.institute_image_id,
+                        image_url: sh.image_url,
+                        data: sh.data
+                    },
+                    { transaction: t }
+                )
+            }
+        }
+
+        // 18 InstituteThreed Image
+        const instituteThreedImage = await InstituteThreedImage.create({}, { transaction: t })
+        if (req.body.instituteThreedImage?.length) {
+            for (const sh of req.body.instituteThreedImageDetails) {
+                await InstituteThreedImageDetails.create(
+                    {
+                        institute_threed_image_id: instituteThreedImage.institute_threed_image_id,
+                        image_url: sh.image_url,
+                        data: sh.data
+                    },
+                    { transaction: t }
+                )
+            }
+        }
+
         // Create mapping
         await InstituteMapping.create(
             {
@@ -381,7 +490,12 @@ export const createInstitute = async (req, res) => {
                 institute_location_id: locationDetails?.institute_location_id,
                 institute_youtube_link_id: youtubeLink?.institute_youtube_link_id,
                 institute_social_media_id: socialMedia?.institute_social_media_id,
-                institute_gallery_id: instituteGallery?.institute_gallery_id
+                institute_gallery_id: instituteGallery?.institute_gallery_id,
+                institute_subject_id: subject?.institute_subject_id,
+                eligibility_id: eligibilityDetails?.eligibility_id,
+                institute_staff_management_id: staffManagement?.institute_staff_management_id,
+                institute_image_id: instituteImage.institute_image_id,
+                institute_threed_image_id: instituteThreedImage?.institute_threed_image_id
             },
             { transaction: t }
         );
@@ -421,10 +535,15 @@ export const getAllInstitutes = async (req, res) => {
                         { model: InstituteShift, as: "instituteShift", include: [{ model: InstituteShiftDetails, as: "details" }] },
                         { model: InstituteSocialMedia, as: "instituteSocialMedia", include: [{ model: InstituteSocialMediaDetails, as: "instituteSocialMediaDetails" }] },
                         { model: InstituteYoutubeLink, as: "instituteYoutubeLink", include: [{ model: InstituteYoutubeLinkDetails, as: "details" }] },
+                        { model: InstituteSubject, as: "instituteSubject", include: [{ model: SubjectDetails, as: "details" }] },
+                        { model: InstituteStaffManagement, as: "instituteStaffManagement", include: [{ model: StaffManagement, as: "staffManagement" }] },
                         { model: InstitutePrimaryDetails, as: "institutePrimaryDetails" },
                         { model: InstituteCampusDetails, as: "campuse" },
                         { model: InstituteBasicDetails, as: "InstituteBasicDetails" },
                         { model: InstituteLocationsDetails, as: "InstituteLocationsDetails" },
+                        { model: EligibilityDetails, as: "eligibility" },
+                        { model: InstituteImage, as: "instituteImage" },
+                        { model: InstituteThreedImage, as: "instituteThreedImage" },
                         {
                             model: InstituteGallery,
                             as: "instituteGallery",
@@ -479,10 +598,15 @@ export const getInstituteById = async (req, res) => {
                         { model: InstituteShift, as: "instituteShift", include: [{ model: InstituteShiftDetails, as: "details" }] },
                         { model: InstituteSocialMedia, as: "instituteSocialMedia", include: [{ model: InstituteSocialMediaDetails, as: "instituteSocialMediaDetails" }] },
                         { model: InstituteYoutubeLink, as: "instituteYoutubeLink", include: [{ model: InstituteYoutubeLinkDetails, as: "details" }] },
+                        { model: InstituteSubject, as: "instituteSubject", include: [{ model: SubjectDetails, as: "details" }] },
+                        { model: InstituteStaffManagement, as: "instituteStaffManagement", include: [{ model: StaffManagement, as: "staffManagement" }] },
                         { model: InstitutePrimaryDetails, as: "institutePrimaryDetails" },
                         { model: InstituteCampusDetails, as: "campuse" },
                         { model: InstituteBasicDetails, as: "InstituteBasicDetails" },
                         { model: InstituteLocationsDetails, as: "InstituteLocationsDetails" },
+                        { model: EligibilityDetails, as: "eligibility" },
+                        { model: InstituteImage, as: "instituteImage" },
+                        { model: InstituteThreedImage, as: "instituteThreedImage" },
                         {
                             model: InstituteGallery,
                             as: "instituteGallery",

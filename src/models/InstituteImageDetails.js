@@ -1,23 +1,20 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../configs/connection.js";
+import {sequelize} from "../configs/connection.js"
 
-const GalleryDocument = sequelize.define("GalleryDocument", {
-    gallery_document_id: {
+const InstituteImageDetails = sequelize.define('InstituteImageDetails', {
+    institute_image_details_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    gallery_id: {
-        type: DataTypes.INTEGER,
+    institute_image_id: {
+        type: DataTypes.INTEGER
     },
-    url: {
+    image_url: {
         type: DataTypes.STRING
     },
     data: {
         type: DataTypes.JSON
-    },
-    media_type_id: {
-        type: DataTypes.INTEGER
     },
     created_at: {
         type: DataTypes.DATE,
@@ -26,10 +23,10 @@ const GalleryDocument = sequelize.define("GalleryDocument", {
     modified_at: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
-    },
+    }
 }, {
-    tableName: "gallery_document",
+    tableName: "institute_image_details",
     timestamps: false
-});
+})
 
-export default GalleryDocument;
+export default InstituteImageDetails

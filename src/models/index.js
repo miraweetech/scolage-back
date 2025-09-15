@@ -50,6 +50,18 @@ import Gallery from "./gallery.js";
 import GalleryDocument from "./GalleryDocument.js";
 import InstituteGallery from "./InstituteGallery.js";
 import MediaType from "./MediaType.js";
+import SubjectType from "./SubjectType.js";
+import SubjectDetails from "./SubjectDetails.js";
+import InstituteSubject from "./InstituteSubject.js";
+import DesignationType from "./DesignationType.js";
+import QualificationType from "./QualificationType.js";
+import StaffManagement from "./StaffManagement.js";
+import InstituteStaffManagement from "./InstituteStaffManagement.js";
+import EligibilityDetails from "./EligibilityDetails.js";
+import InstituteImageDetails from "./InstituteImageDetails.js";
+import InstituteImage from "./InstituteImage.js";
+import InstituteThreedImageDetails from "./InstituteThreedImageDetails.js";
+import InstituteThreedImage from "./InstituteThreedImage.js";
 
 // Modules.created_by → User.id
 Modules.belongsTo(User, { foreignKey: "created_by", as: "creator" });
@@ -329,6 +341,21 @@ InstituteYoutubeLink.hasMany(InstituteMapping, { foreignKey: "institute_youtube_
 InstituteMapping.belongsTo(InstituteGallery, { foreignKey: "institute_gallery_id", as: "instituteGallery" })
 InstituteGallery.hasMany(InstituteMapping, { foreignKey: "institute_gallery_id", as: "instituteMapping" })
 
+InstituteMapping.belongsTo(InstituteSubject, { foreignKey: "institute_subject_id", as: "instituteSubject" })
+InstituteSubject.hasMany(InstituteMapping, { foreignKey: "institute_subject_id", as: "instituteMapping" })
+
+InstituteMapping.belongsTo(EligibilityDetails, { foreignKey: "eligibility_id", as: "eligibility" })
+EligibilityDetails.hasMany(InstituteMapping, { foreignKey: "eligibility_id", as: "instituteMapping" })
+
+InstituteMapping.belongsTo(InstituteStaffManagement, { foreignKey: "institute_staff_management_id", as: "instituteStaffManagement" });
+InstituteStaffManagement.hasMany(InstituteMapping, { foreignKey: "institute_staff_management_id", as: "instituteMapping" });
+
+InstituteMapping.belongsTo(InstituteImage, {foreignKey: "institute_image_id", as: "instituteImage"})
+InstituteImage.hasMany(InstituteMapping, {foreignKey: "institute_image_id", as: "instituteMapping"})
+
+InstituteMapping.belongsTo(InstituteThreedImage, {foreignKey: "institute_threed_image_id", as: "instituteThreedImage"})
+InstituteThreedImage.hasMany(InstituteMapping, {foreignKey: "institute_threed_image_id", as: "instituteMapping"})
+
 //==========Gallery==========
 
 Gallery.belongsTo(GalleryDocument, { foreignKey: "gallery_id", as: "galleryDocument" })
@@ -342,6 +369,42 @@ Institute.hasMany(Gallery, { foreignKey: "institute_id", as: "gallery" })
 
 MediaType.belongsTo(GalleryDocument, { foreignKey: "media_type_id", as: "galleryDocument" })
 GalleryDocument.hasMany(MediaType, { foreignKey: "media_type_id", as: "mediaType" })
+
+// =============== subject ============
+
+SubjectType.belongsTo(User, { foreignKey: "created_by", as: "creator" })
+User.hasMany(SubjectType, { foreignKey: "created_by", as: "subjectType" })
+
+SubjectDetails.belongsTo(SubjectType, { foreignKey: "subject_type_id", as: "subjectDetails" })
+SubjectType.hasMany(SubjectDetails, { foreignKey: "subject_type_id", as: "subjectType" })
+
+SubjectDetails.belongsTo(InstituteSubject, { foreignKey: "institute_subject_id", as: "instituteSubject" })
+InstituteSubject.hasMany(SubjectDetails, { foreignKey: "institute_subject_id", as: "details" })
+
+//============ designation ==========
+DesignationType.belongsTo(User, { foreignKey: "created_by", as: "creator" })
+User.hasMany(DesignationType, { foreignKey: "created_by", as: "designationType" })
+
+//============ qualification =========
+QualificationType.belongsTo(User, { foreignKey: "created_by", as: "creator" })
+User.hasMany(QualificationType, { foreignKey: "created_by", as: "qualificationType" })
+
+// ============Staff Management=============
+StaffManagement.belongsTo(DesignationType, { foreignKey: "designation_type_id", as: "staffManagement" })
+DesignationType.hasMany(StaffManagement, { foreignKey: "designation_type_id", as: "designationType" })
+
+StaffManagement.belongsTo(QualificationType, { foreignKey: "qualification_type_id", as: "staffmanagement" })
+QualificationType.hasMany(StaffManagement, { foreignKey: "qualification_type_id", as: "qualificationType" })
+
+StaffManagement.belongsTo(InstituteStaffManagement, { foreignKey: "institute_staff_management_id", as: "instituteStaffManagement" })
+InstituteStaffManagement.hasMany(StaffManagement, { foreignKey: "institute_staff_management_id", as: "staffManagement" })
+
+// ============ Inastitute Image==========
+InstituteImageDetails.belongsTo(InstituteImage, {foreignKey: "institute_image_id", as: "instituteImage"})
+InstituteImage.hasMany(InstituteImageDetails, {foreignKey: "institute_image_id", as: "instituteImageDetail"})
+
+InstituteThreedImageDetails.belongsTo(InstituteThreedImage, {foreignKey: "institute_threed_image_id", as: "instituteThreedImage"})
+InstituteThreedImage.hasMany(InstituteThreedImageDetails, {foreignKey: "institute_threed_image_id", as: "instituteThreedImageDetails"})
 
 export {
     User,
@@ -395,5 +458,17 @@ export {
     Gallery,
     GalleryDocument,
     InstituteGallery,
-    MediaType
+    MediaType,
+    SubjectDetails,
+    SubjectType,
+    InstituteSubject,
+    StaffManagement,
+    InstituteStaffManagement,
+    QualificationType,
+    EligibilityDetails,
+    DesignationType,
+    InstituteImage,
+    InstituteImageDetails,
+    InstituteThreedImage,
+    InstituteThreedImageDetails
 };

@@ -119,13 +119,13 @@ export const superAdminLogin = async (req, res) => {
         await redis.del(key);
 
         // Generate token + uuid
-        const token = jwt.sign({ id: user.id }, jwtSecret, { expiresIn: "1h" });
+        const token = jwt.sign({ id: user.id }, jwtSecret, { expiresIn: "24h" });
         const uuid = uuidv4();
         const encryptedKey = cryptr.encrypt(user.id.toString());
 
         // Save in Redis
-        await redis.set(`auth:tokens:${user.id}`, token, "EX", 3600);
-        await redis.set(`auth:map:${uuid}`, encryptedKey, "EX", 3600);
+        await redis.set(`auth:tokens:${user.id}`, token, "EX", 86400);
+        await redis.set(`auth:map:${uuid}`, encryptedKey, "EX", 86400);
 
 
         return res.status(200).json({
