@@ -369,7 +369,8 @@ export const createInstitute = async (req, res) => {
                             {
                                 gallery_id: gallery.gallery_id,
                                 url: doc.url,
-                                media_type_id: doc.media_type_id
+                                media_type_id: doc.media_type_id,
+                                data: doc.data
                             },
                             { transaction: t }
                         );
@@ -446,8 +447,8 @@ export const createInstitute = async (req, res) => {
         }
 
         // 17 InstituteImage
-        const instituteImage = await InstituteImage.create({}, { transaction: t })
-        if (req.body.instituteImage?.length) {
+        const instituteImage = await InstituteImage.create({}, { transaction: t });
+        if (req.body.instituteImageDetails?.length) {
             for (const sh of req.body.instituteImageDetails) {
                 await InstituteImageDetails.create(
                     {
@@ -456,13 +457,13 @@ export const createInstitute = async (req, res) => {
                         data: sh.data
                     },
                     { transaction: t }
-                )
+                );
             }
         }
 
-        // 18 InstituteThreed Image
-        const instituteThreedImage = await InstituteThreedImage.create({}, { transaction: t })
-        if (req.body.instituteThreedImage?.length) {
+        // 18 InstituteThreedImage
+        const instituteThreedImage = await InstituteThreedImage.create({}, { transaction: t });
+        if (req.body.instituteThreedImageDetails?.length) {
             for (const sh of req.body.instituteThreedImageDetails) {
                 await InstituteThreedImageDetails.create(
                     {
@@ -471,9 +472,10 @@ export const createInstitute = async (req, res) => {
                         data: sh.data
                     },
                     { transaction: t }
-                )
+                );
             }
         }
+
 
         // Create mapping
         await InstituteMapping.create(
@@ -528,22 +530,29 @@ export const getAllInstitutes = async (req, res) => {
                     model: InstituteMapping,
                     as: "instituteMapping",
                     include: [
-                        { model: InstituteHighlights, as: "instituteHighlights", include: [{ model: InstituteHighlightsDetails, as: "details" }] },
-                        { model: InstituteInfrastructure, as: "instituteInfrastructure", include: [{ model: InstituteInfrastructureDetails, as: "details" }] },
-                        { model: InstitutePhone, as: "institutePhone", include: [{ model: InstitutePhoneDetails, as: "institutePhoneDetails" }] },
-                        { model: InstituteEmail, as: "instituteEmail", include: [{ model: InstituteEmailDetails, as: "instituteEmailDetails" }] },
-                        { model: InstituteShift, as: "instituteShift", include: [{ model: InstituteShiftDetails, as: "details" }] },
-                        { model: InstituteSocialMedia, as: "instituteSocialMedia", include: [{ model: InstituteSocialMediaDetails, as: "instituteSocialMediaDetails" }] },
-                        { model: InstituteYoutubeLink, as: "instituteYoutubeLink", include: [{ model: InstituteYoutubeLinkDetails, as: "details" }] },
+                        { model: InstituteInfrastructure, as: "instituteInfrastructure", include: [{ model: InstituteInfrastructureDetails, as: "details", }] },
+                        { model: InstituteHighlights, as: "instituteHighlights", include: [{ model: InstituteHighlightsDetails, as: "details", separate: true }] },
+                        { model: InstitutePhone, as: "institutePhone", include: [{ model: InstitutePhoneDetails, as: "institutePhoneDetails", separate: true }] },
+                        { model: InstituteEmail, as: "instituteEmail", include: [{ model: InstituteEmailDetails, as: "details", separate: true }] },
+                        { model: InstituteShift, as: "instituteShift", include: [{ model: InstituteShiftDetails, as: "details", separate: true }] },
+                        { model: InstituteSocialMedia, as: "instituteSocialMedia", include: [{ model: InstituteSocialMediaDetails, as: "instituteSocialMediaDetails", separate: true }] },
+                        { model: InstituteYoutubeLink, as: "instituteYoutubeLink", include: [{ model: InstituteYoutubeLinkDetails, as: "details", separate: true }] },
                         { model: InstituteSubject, as: "instituteSubject", include: [{ model: SubjectDetails, as: "details" }] },
-                        { model: InstituteStaffManagement, as: "instituteStaffManagement", include: [{ model: StaffManagement, as: "staffManagement" }] },
+                        // { model: InstituteStaffManagement, as: "instituteStaffManagement", include: [{ model: StaffManagement, as: "staffManagement", }] },
+                        {
+    model: InstituteStaffManagement,
+    as: "instituteStaffManagement",
+    include: [
+        { model: StaffManagement, as: "staffManagement" } 
+    ]
+},
                         { model: InstitutePrimaryDetails, as: "institutePrimaryDetails" },
                         { model: InstituteCampusDetails, as: "campuse" },
                         { model: InstituteBasicDetails, as: "InstituteBasicDetails" },
                         { model: InstituteLocationsDetails, as: "InstituteLocationsDetails" },
                         { model: EligibilityDetails, as: "eligibility" },
-                        { model: InstituteImage, as: "instituteImage" },
-                        { model: InstituteThreedImage, as: "instituteThreedImage" },
+                        { model: InstituteImage, as: "instituteImage", include: [{ model: InstituteImageDetails, as: "instituteImageDetail", separate: true }] },
+                        { model: InstituteThreedImage, as: "instituteThreedImage", include: [{ model: InstituteThreedImageDetails, as: "instituteThreedImageDetails", separate: true }] },
                         {
                             model: InstituteGallery,
                             as: "instituteGallery",
@@ -591,22 +600,22 @@ export const getInstituteById = async (req, res) => {
                     model: InstituteMapping,
                     as: "instituteMapping",
                     include: [
-                        { model: InstituteHighlights, as: "instituteHighlights", include: [{ model: InstituteHighlightsDetails, as: "details" }] },
-                        { model: InstituteInfrastructure, as: "instituteInfrastructure", include: [{ model: InstituteInfrastructureDetails, as: "details" }] },
-                        { model: InstitutePhone, as: "institutePhone", include: [{ model: InstitutePhoneDetails, as: "institutePhoneDetails" }] },
-                        { model: InstituteEmail, as: "instituteEmail", include: [{ model: InstituteEmailDetails, as: "instituteEmailDetails" }] },
-                        { model: InstituteShift, as: "instituteShift", include: [{ model: InstituteShiftDetails, as: "details" }] },
-                        { model: InstituteSocialMedia, as: "instituteSocialMedia", include: [{ model: InstituteSocialMediaDetails, as: "instituteSocialMediaDetails" }] },
-                        { model: InstituteYoutubeLink, as: "instituteYoutubeLink", include: [{ model: InstituteYoutubeLinkDetails, as: "details" }] },
+                        { model: InstituteHighlights, as: "instituteHighlights", include: [{ model: InstituteHighlightsDetails, as: "details", separate: true }] },
+                        { model: InstituteInfrastructure, as: "instituteInfrastructure", include: [{ model: InstituteInfrastructureDetails, as: "instituteInfrastructureDetails" }] },
+                        { model: InstitutePhone, as: "institutePhone", include: [{ model: InstitutePhoneDetails, as: "institutePhoneDetails", separate: true }] },
+                        { model: InstituteEmail, as: "instituteEmail", include: [{ model: InstituteEmailDetails, as: "details", separate: true }] },
+                        { model: InstituteShift, as: "instituteShift", include: [{ model: InstituteShiftDetails, as: "details", separate: true }] },
+                        { model: InstituteSocialMedia, as: "instituteSocialMedia", include: [{ model: InstituteSocialMediaDetails, as: "instituteSocialMediaDetails", separate: true }] },
+                        { model: InstituteYoutubeLink, as: "instituteYoutubeLink", include: [{ model: InstituteYoutubeLinkDetails, as: "details", separate: true }] },
                         { model: InstituteSubject, as: "instituteSubject", include: [{ model: SubjectDetails, as: "details" }] },
-                        { model: InstituteStaffManagement, as: "instituteStaffManagement", include: [{ model: StaffManagement, as: "staffManagement" }] },
+                        { model: InstituteStaffManagement, as: "instituteStaffManagement", include: [{ model: StaffManagement, as: "staffManagement", include: [{ model: DesignationType, as: "designationType" }, { model: QualificationType, as: "qualificationType" }] }] },
                         { model: InstitutePrimaryDetails, as: "institutePrimaryDetails" },
                         { model: InstituteCampusDetails, as: "campuse" },
                         { model: InstituteBasicDetails, as: "InstituteBasicDetails" },
                         { model: InstituteLocationsDetails, as: "InstituteLocationsDetails" },
                         { model: EligibilityDetails, as: "eligibility" },
-                        { model: InstituteImage, as: "instituteImage" },
-                        { model: InstituteThreedImage, as: "instituteThreedImage" },
+                        { model: InstituteImage, as: "instituteImage", include: [{ model: InstituteImageDetails, as: "instituteImageDetail", separate: true }] },
+                        { model: InstituteThreedImage, as: "instituteThreedImage", include: [{ model: InstituteThreedImageDetails, as: "instituteThreedImageDetails", separate: true }] },
                         {
                             model: InstituteGallery,
                             as: "instituteGallery",
