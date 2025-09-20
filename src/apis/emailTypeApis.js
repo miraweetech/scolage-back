@@ -15,7 +15,7 @@ emailTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /email-type:
+ * /v1/email-type:
  *   post:
  *     summary: Create a new email type
  *     tags: [Email Types]
@@ -38,7 +38,7 @@ emailTypeApis.post("/", createEmailType);
 
 /**
  * @swagger
- * /email-type:
+ * /v1/email-type:
  *   get:
  *     summary: Get all email types
  *     tags: [Email Types]
@@ -52,7 +52,7 @@ emailTypeApis.get("/", getAllEmailTypes);
 
 /**
  * @swagger
- * /email-type/{id}:
+ * /v1/email-type/{id}:
  *   get:
  *     summary: Get email type by ID
  *     tags: [Email Types]
@@ -74,7 +74,7 @@ emailTypeApis.get("/:id", getEmailTypeById);
 
 /**
  * @swagger
- * /email-type/{id}:
+ * /v1/email-type/{id}:
  *   put:
  *     summary: Update email type
  *     tags: [Email Types]
@@ -105,7 +105,7 @@ emailTypeApis.patch("/:id", updateEmailType);
 
 /**
  * @swagger
- * /email-type/{id}:
+ * /v1/email-type/{id}:
  *   delete:
  *     summary: Delete email type
  *     tags: [Email Types]

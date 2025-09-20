@@ -15,7 +15,7 @@ highlightsTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /highlights-type:
+ * /v1/highlights-type:
  *   post:
  *     summary: Create a new highlights type
  *     tags: [Highlights Types]
@@ -38,7 +38,7 @@ highlightsTypeApis.post("/", createHighlightsType);
 
 /**
  * @swagger
- * /highlights-type:
+ * /v1/highlights-type:
  *   get:
  *     summary: Get all highlights types
  *     tags: [Highlights Types]
@@ -52,7 +52,7 @@ highlightsTypeApis.get("/", getAllHighlightsTyps);
 
 /**
  * @swagger
- * /highlights-type/{id}:
+ * /v1/highlights-type/{id}:
  *   get:
  *     summary: Get highlights type by ID
  *     tags: [Highlights Types]
@@ -74,7 +74,7 @@ highlightsTypeApis.get("/:id", getHighlightsTypsById);
 
 /**
  * @swagger
- * /highlights-type/{id}:
+ * /v1/highlights-type/{id}:
  *   put:
  *     summary: Update highlights type
  *     tags: [Highlights Types]
@@ -105,7 +105,7 @@ highlightsTypeApis.patch("/:id", updateHighlightsTyps);
 
 /**
  * @swagger
- * /highlights-type/{id}:
+ * /v1/highlights-type/{id}:
  *   delete:
  *     summary: Delete highlights type
  *     tags: [Highlights Types]

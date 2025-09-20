@@ -15,7 +15,7 @@ mediaTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /media-type:
+ * /v1/media-type:
  *   post:
  *     summary: Create a new media type
  *     tags: [Media Types]
@@ -38,7 +38,7 @@ mediaTypeApis.post("/", createMediaType);
 
 /**
  * @swagger
- * /media-type:
+ * /v1/media-type:
  *   get:
  *     summary: Get all media types
  *     tags: [Media Types]
@@ -52,7 +52,7 @@ mediaTypeApis.get("/", getAllMediaType);
 
 /**
  * @swagger
- * /media-type/{id}:
+ * /v1/media-type/{id}:
  *   get:
  *     summary: Get media type by ID
  *     tags: [Media Types]
@@ -74,7 +74,7 @@ mediaTypeApis.get("/:id", getMediaTypeById);
 
 /**
  * @swagger
- * /media-type/{id}:
+ * /v1/media-type/{id}:
  *   put:
  *     summary: Update media type
  *     tags: [Media Types]
@@ -105,7 +105,7 @@ mediaTypeApis.patch("/:id", updateMediaType);
 
 /**
  * @swagger
- * /media-type/{id}:
+ * /v1/media-type/{id}:
  *   delete:
  *     summary: Delete media type
  *     tags: [Media Types]

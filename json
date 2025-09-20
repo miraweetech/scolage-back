@@ -1,0 +1,176 @@
+{
+    "institute_type_id": 1,
+    "place_id": 108,
+    "basicDetails": {
+        "slogan": "Global International",
+        "more_info": "Excellence in Education"
+    },
+    "primaryDetails": {
+        "name": "Oxford University",
+        "clg_profile_image_link": "https://example.com/images/oxfordd.png",
+        "system_type_id": 1,
+        "academic_type_id": 2,
+        "affiliate_type_id": 1,
+        "college_code": 123,
+        "domain_name": "oxford",
+        "tld": "edu"
+    },
+    "campusDetails": {
+        "class_type_id": 1,
+        "total_rooms": 55,
+        "total_seats": 2500,
+        "collage_area": 15000.75,
+        "total_floors": 6
+    },
+    "locationDetails": {
+        "state_id": 1,
+        "city_id": 1,
+        "area_id": 1,
+        "address": "123 University Road, Ahmedabad",
+        "longitude": "73.5714",
+        "latitude": "24.0225",
+        "google_map_link": "https://maps.google.com/?q=23.0225,72.5714"
+    },
+    "eligibilityDetails": {
+        "eligibility_criteria": "criteria",
+        "fee_terms": "terms"
+    },
+    "highlightsDetails": [
+        {
+            "institute_highlights_type_id": 1,
+            "description": "Smart classrooms"
+        },
+        {
+            "institute_highlights_type_id": 2,
+            "description": "Staff room"
+        }
+    ],
+    "infrastructureDetails": [
+        {
+            "infra_id": 1
+        },
+        {
+            "infra_id": 2
+        }
+    ],
+    "phoneDetails": [
+        {
+            "institute_phone_type_id": 1,
+            "isvisible": true
+        },
+        {
+            "institute_phone_type_id": 2
+        }
+    ],
+    "emailDetails": [
+        {
+            "institute_emails_type_id": 1,
+            "email": "info@gmail.com"
+        },
+        {
+            "institute_emails_type_id": 2,
+            "email": "test@gmail.com"
+        }
+    ],
+    "shiftDetails": [
+        {
+            "institute_shift_type_id": 1,
+            "starting_hours": "08:00",
+            "ending_hours": "14:00"
+        },
+        {
+            "institute_shift_type_id": 2,
+            "starting_hours": "07:00",
+            "ending_hours": "13:00"
+        }
+    ],
+    "socialMediaDetails": [
+        {
+            "institute_social_media_type_id": 1,
+            "social_media_url": "www.facebook.com"
+        },
+        {
+            "institute_social_media_type_id": 2,
+            "social_media_url": "www.instagram.com"
+        }
+    ],
+    "youtubeLinkDetails": [
+        {
+            "institute_youtube_link_type_id": 1
+        },
+        {
+            "institute_youtube_link_type_id": 2
+        }
+    ],
+    "galleries": [
+        {
+            "gallery_name": "Campus Life",
+            "documents": [
+                {
+                    "url": "https://example.com/campus1.png",
+                    "data": {
+                        "name": "document",
+                        "number": 12
+                    },
+                    "media_type_id": 3
+                },
+                {
+                    "url": "https://example.com/campus2.jpg",
+                    "media_type_id": 3
+                }
+            ]
+        }
+    ],
+    "subjectDetails": [
+        {
+            "subject_type_id": 1,
+            "description": "qwertyuiosadfgh",
+            "max_fee": 1000,
+            "min_fee": 500,
+            "no_of_seats": 50
+        },
+        {
+            "subject_type_id": 2,
+            "description": "qwertyuiosadfgh",
+            "max_fee": 2000,
+            "min_fee": 550,
+            "no_of_seats": 55
+        }
+    ],
+    "staffManagementDetails": [
+        {
+            "qualification_type_id": 1,
+            "designation_type_id": 1,
+            "profile_picture_url": "/profile.png",
+            "name": "abcd",
+            "total_experience_years": 4,
+            "current_experience_years": 4,
+            "about": "dsfguoiuytrytuiouyhg"
+        },
+        {
+            "qualification_type_id": 2,
+            "designation_type_id": 2,
+            "profile_picture_url": "/profile.png",
+            "name": "abcd",
+            "total_experience_years": 4,
+            "current_experience_years": 4,
+            "about": "dsfguoiuytrytuiouyhg"
+        }
+    ],
+    "instituteImageDetails": [
+        {
+            "image_url": "/image_url.png",
+            "data": {
+                "name": "institute image"
+            }
+        }
+    ],
+    "instituteThreedImageDetails": [
+        {
+            "image_url": "/institute_threed.png",
+            "data": {
+                "name": "instituteThreedImage"
+            }
+        }
+    ]
+}

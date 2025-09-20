@@ -1,8 +1,6 @@
-import { Op } from "sequelize";
 import { Modules, User, SuperModules, UserModuleMappings, InstituteModules, UserSuperMappings, UserInstituteMappings } from "../models/index.js";
 import { sequelize } from "../configs/connection.js";
 
-// Create Module
 export const createModule = async (req, res) => {
     const t = await sequelize.transaction();
     try {
@@ -92,7 +90,6 @@ export const createModule = async (req, res) => {
     }
 };
 
-// Get All Modules
 export const getAllModules = async (req, res) => {
     try {
         // Get page and limit from query params (default: page=1, limit=10)
@@ -131,7 +128,6 @@ export const getAllModules = async (req, res) => {
     }
 };
 
-// Get Module by ID
 export const getModuleById = async (req, res) => {
     try {
         const module = await Modules.findByPk(req.params.id, {
@@ -156,7 +152,6 @@ export const getModuleById = async (req, res) => {
     }
 };
 
-// Update Module
 export const updateModule = async (req, res) => {
     try {
         const moduleId = req.params.id;
@@ -202,7 +197,6 @@ export const updateModule = async (req, res) => {
     }
 };
 
-// Delete Module
 export const deleteModule = async (req, res) => {
     try {
         const moduleId = req.params.id;
@@ -226,7 +220,6 @@ export const deleteModule = async (req, res) => {
     }
 };
 
-// Filter Modules by type (super/institute)
 export const filterModules = async (req, res) => {
     try {
         const { type } = req.query; // "super" | "institute"
@@ -290,7 +283,6 @@ export const filterModules = async (req, res) => {
     }
 };
 
-// Filter Modules by userId
 export const filterModulesByUser = async (req, res) => {
     try {
         const { userId } = req.query;

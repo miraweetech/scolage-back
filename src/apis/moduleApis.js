@@ -1,4 +1,3 @@
-// src/apis/moduleApis.js
 import express from "express";
 import {
   createModule,

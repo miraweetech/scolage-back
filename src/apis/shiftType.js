@@ -1,6 +1,5 @@
 import express from "express";
 import { authMiddleware } from "../middleware/authMiddleware.js";
-import { createAcademicType, deleteAcademicType, getAcademicTypeById, getAllAcademicType, updateAcademicType } from "../controllers/academicTypeController.js";
 import { createShiftType, deleteShiftType, getAllShiftType, getShiftTypeById, updateShiftType } from "../controllers/shiftTypeControllers.js";
 
 const shiftTypeApis = express.Router();
@@ -16,7 +15,7 @@ shiftTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /shift-type:
+ * /v1/shift-type:
  *   post:
  *     summary: Create a new shift type
  *     tags: [Shift Types]
@@ -39,7 +38,7 @@ shiftTypeApis.post("/", createShiftType);
 
 /**
  * @swagger
- * /shift-type:
+ * /v1/shift-type:
  *   get:
  *     summary: Get all shift types
  *     tags: [Shift Types]
@@ -53,7 +52,7 @@ shiftTypeApis.get("/", getAllShiftType);
 
 /**
  * @swagger
- * /shift-type/{id}:
+ * /v1/shift-type/{id}:
  *   get:
  *     summary: Get shift type by ID
  *     tags: [Shift Types]
@@ -75,7 +74,7 @@ shiftTypeApis.get("/:id", getShiftTypeById);
 
 /**
  * @swagger
- * /Shift-type/{id}:
+ * /v1/Shift-type/{id}:
  *   put:
  *     summary: Update Shift type
  *     tags: [Shift Types]
@@ -106,7 +105,7 @@ shiftTypeApis.patch("/:id", updateShiftType);
 
 /**
  * @swagger
- * /shift-type/{id}:
+ * /v1/shift-type/{id}:
  *   delete:
  *     summary: Delete shift type
  *     tags: [Shift Types]

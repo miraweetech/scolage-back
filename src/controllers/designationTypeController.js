@@ -27,7 +27,7 @@ export const getAllDesignationType = async (req, res) => {
         const limit = parseInt(req.query.limit) || 10;
         const offset = (page - 1) * limit;
 
-        const {rows: data, count} = await DesignationType.findAndCountAll({
+        const { rows: data, count } = await DesignationType.findAndCountAll({
             limit,
             offset
         });
@@ -44,7 +44,6 @@ export const getAllDesignationType = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
 
 export const getDesignationTypeById = async (req, res) => {
     try {
@@ -80,7 +79,6 @@ export const updateDesignationType = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
 
 export const deleteDesignationType = async (req, res) => {
     try {

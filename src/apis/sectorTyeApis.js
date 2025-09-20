@@ -15,7 +15,7 @@ sectorType.use(authMiddleware);
 
 /**
  * @swagger
- * /sector-type:
+ * /v1/sector-type:
  *   post:
  *     summary: Create a new sector type
  *     tags: [Sector Types]
@@ -38,7 +38,7 @@ sectorType.post("/", createSectorType);
 
 /**
  * @swagger
- * /sector-type:
+ * /v1/sector-type:
  *   get:
  *     summary: Get all sector types
  *     tags: [Sector Types]
@@ -52,7 +52,7 @@ sectorType.get("/", getAllSectorTypes);
 
 /**
  * @swagger
- * /sector-type/{id}:
+ * /v1/sector-type/{id}:
  *   get:
  *     summary: Get sector type by ID
  *     tags: [Sector Types]
@@ -74,7 +74,7 @@ sectorType.get("/:id", getSectorTypeById) ;
 
 /**
  * @swagger
- * /sector-type/{id}:
+ * /v1/sector-type/{id}:
  *   put:
  *     summary: Update sector type
  *     tags: [Sector Types]
@@ -105,7 +105,7 @@ sectorType.patch("/:id", updateSectorType);
 
 /**
  * @swagger
- * /sector-type/{id}:
+ * /v1/sector-type/{id}:
  *   delete:
  *     summary: Delete sector type
  *     tags: [Sector Types]

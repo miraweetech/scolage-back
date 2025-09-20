@@ -1,5 +1,5 @@
 import redis from "../configs/redisConnection.js";
-import { Institute, InstituteAdmin, User, UserInstituteMappings } from "../models/index.js";
+import { Institute, InstituteAdmin, User, UserInstituteMappings, UserSuperMappings } from "../models/index.js";
 import { sendOtpToEmail } from "../services/otp.services.js";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
@@ -183,3 +183,58 @@ export const getAllInstituteAdmins = async (req, res) => {
     });
   }
 }
+
+export const getInstituteAdminById = async (req, res) => {
+  try {
+    const instituteAdmin = await InstituteAdmin.findByPk(req.params.id, {});
+    if (!instituteAdmin) {
+      return res.status(404).json({ message: "instituteAdmin not found" });
+    }
+    res.status(200).json(instituteAdmin);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching institute admin",
+      error: error.message
+    });
+  }
+};
+
+export const updateInstituteAdmin = async (req, res) => {
+  try {
+    const [updated] = await InstituteAdmin.update(
+      { ...req.body, modified_at: new Date() },
+      { where: { institute_admin_id: req.params.id } }
+    );
+    if (!updated) {
+      return res.status(404).json({ message: "instituteAdmin not found" });
+    }
+    const updatedInstituteAdmin = await InstituteAdmin.findByPk(req.params.id);
+    res.status(200).json(updatedInstituteAdmin);
+  } catch (error) {
+    res.status(400).json({
+      message: "Error updating institute admin",
+      error: error.message
+    });
+  }
+};
+
+export const deleteInstituteAdmin = async (req, res) => {
+  try {
+    await UserSuperMappings.destroy({
+      where: { institute_admin_id: req.params.id }
+    });
+
+    const deleted = await InstituteAdmin.destroy({
+      where: { institute_admin_id: req.params.id }
+    });
+    if (!deleted) {
+      return res.status(404).json({ message: "InstituteAdmin not found" });
+    }
+    res.status(200).json({ message: "InstituteAdmin deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error deleting institute admin",
+      error: error.message
+    });
+  }
+};

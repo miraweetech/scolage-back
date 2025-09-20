@@ -2,35 +2,43 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
 const InstituteSystemType = sequelize.define("InstituteSystemType", {
-    institute_system_type_id: {
+    syatem_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "system_id"
     },
     created_by: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "created_by"
     },
     name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "name"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     },
     isdisable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdisable"
     },
     isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdeleted"
     }
 }, {
     tableName: "institute_system_type",
     timestamps: false
-})
-export default InstituteSystemType
+});
+
+export default InstituteSystemType;

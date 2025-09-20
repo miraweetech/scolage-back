@@ -45,7 +45,6 @@ export const getAllSubjectType = async (req, res) => {
     }
 };
 
-
 export const getSubjectTypeById = async (req, res) => {
     try {
         const subjectType = await SubjectType.findByPk(req.params.id);
@@ -80,7 +79,6 @@ export const updateSubjectType = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
 
 export const deleteSubjectType = async (req, res) => {
     try {

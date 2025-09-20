@@ -1,28 +1,34 @@
 import { DataTypes } from "sequelize";
-import {sequelize} from "../configs/connection.js"
+import { sequelize } from "../configs/connection.js"
 
 const InstituteImageDetails = sequelize.define('InstituteImageDetails', {
     institute_image_details_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "img_detail_id"
     },
     institute_image_id: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        field: "image_id"
     },
     image_url: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "url"
     },
     data: {
-        type: DataTypes.JSON
+        type: DataTypes.JSON,
+        field: "data"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     }
 }, {
     tableName: "institute_image_details",

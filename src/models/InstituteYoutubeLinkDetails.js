@@ -5,33 +5,41 @@ const InstituteYoutubeLinkDetails = sequelize.define("InstituteYoutubeLinkDetail
     institute_youtube_link_details_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "youtube_link_detail_id"
     },
     institute_youtube_link_type_id: {
         type: DataTypes.INTEGER,
+        field: "youtube_link_type_id"
     },
     institute_youtube_link_id: {
         type: DataTypes.INTEGER,
+        field: "youtube_link_id"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     },
     isdisable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdisable"
     },
     isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdeleted"
     },
     isvisible: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true
+        defaultValue: true,
+        field: "isvisible"
     }
 }, {
     tableName: "institute_youtube_link_details",

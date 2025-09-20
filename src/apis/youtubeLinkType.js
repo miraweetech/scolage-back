@@ -2,7 +2,6 @@ import express from "express";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import { createYoutubeLinkType, deleteYoutubeLinkType, getAllYoutubeLinkType, getYoutubeLinkTypeById, updateYoutubeLinkType } from "../controllers/youtubeLinkTypeControllers.js";
 
-
 const youtubeLinkTypeApis = express.Router();
 
 youtubeLinkTypeApis.use(authMiddleware);
@@ -16,7 +15,7 @@ youtubeLinkTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /youtubeLink-type:
+ * /v1/youtubeLink-type:
  *   post:
  *     summary: Create a new youtubeLink type
  *     tags: [YoutubeLink Types]
@@ -39,7 +38,7 @@ youtubeLinkTypeApis.post("/", createYoutubeLinkType);
 
 /**
  * @swagger
- * /youtubeLink-type:
+ * /v1/youtubeLink-type:
  *   get:
  *     summary: Get all socialMedia types
  *     tags: [YoutubeLink Types]
@@ -53,7 +52,7 @@ youtubeLinkTypeApis.get("/", getAllYoutubeLinkType);
 
 /**
  * @swagger
- * /youtubeLink-type/{id}:
+ * /v1/youtubeLink-type/{id}:
  *   get:
  *     summary: Get youtubeLink type by ID
  *     tags: [YoutubeLink Types]
@@ -75,7 +74,7 @@ youtubeLinkTypeApis.get("/:id", getYoutubeLinkTypeById);
 
 /**
  * @swagger
- * /youtubeLink-type/{id}:
+ * /v1/youtubeLink-type/{id}:
  *   put:
  *     summary: Update youtubeLink type
  *     tags: [YoutubeLink Types]
@@ -106,7 +105,7 @@ youtubeLinkTypeApis.patch("/:id", updateYoutubeLinkType);
 
 /**
  * @swagger
- * /youtubeLink-type/{id}:
+ * /v1/youtubeLink-type/{id}:
  *   delete:
  *     summary: Delete youtubeLink type
  *     tags: [YoutubeLink Types]

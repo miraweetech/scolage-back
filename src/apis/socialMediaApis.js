@@ -15,7 +15,7 @@ socialMediaTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /socialMedia-type:
+ * /v1/socialMedia-type:
  *   post:
  *     summary: Create a new socialMedia type
  *     tags: [SocialMedia Types]
@@ -38,7 +38,7 @@ socialMediaTypeApis.post("/", createSocialMediaType);
 
 /**
  * @swagger
- * /socialMedia-type:
+ * /v1/socialMedia-type:
  *   get:
  *     summary: Get all socialMedia types
  *     tags: [SocialMedia Types]
@@ -52,7 +52,7 @@ socialMediaTypeApis.get("/", getAllSocialMediaType);
 
 /**
  * @swagger
- * /socialMedia-type/{id}:
+ * /v1/socialMedia-type/{id}:
  *   get:
  *     summary: Get socialMedia type by ID
  *     tags: [SocialMedia Types]
@@ -74,7 +74,7 @@ socialMediaTypeApis.get("/:id", getSocialMediaTypeById);
 
 /**
  * @swagger
- * /socialMedia-type/{id}:
+ * /v1/socialMedia-type/{id}:
  *   put:
  *     summary: Update socialMedia type
  *     tags: [SocialMedia Types]
@@ -105,7 +105,7 @@ socialMediaTypeApis.patch("/:id", updatesocialMediaType);
 
 /**
  * @swagger
- * /socialMedia-type/{id}:
+ * /v1/socialMedia-type/{id}:
  *   delete:
  *     summary: Delete socialMedia type
  *     tags: [SocialMedia Types]

@@ -1,11 +1,11 @@
-import { InstituteEmailType, MediaType } from "../models/index.js";
+import { MediaType } from "../models/index.js";
 
 export const createMediaType = async (req, res) => {
     try {
         const mediaTypeData = req.body;
-        const newMediaType = await MediaType.create({
-            mediaTypeData
-        })
+
+        const newMediaType = await MediaType.create(mediaTypeData);
+
         return res.status(201).json({
             message: "Media type created",
             data: newMediaType
@@ -38,7 +38,6 @@ export const getAllMediaType = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
 
 export const getMediaTypeById = async (req, res) => {
     try {
@@ -75,7 +74,6 @@ export const updateMediaType = async (req, res) => {
     }
 };
 
-
 export const deleteMediaType = async (req, res) => {
     try {
         const mediaType = await MediaType.findByPk(req.params.id);
@@ -84,7 +82,7 @@ export const deleteMediaType = async (req, res) => {
                 message: "Media type not found"
             });
         }
-        await emailType.destroy();
+        await mediaType.destroy();
         return res.status(200).json({
             message: "Media type deleted"
         });

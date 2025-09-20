@@ -1,24 +1,12 @@
-// import express from "express";
-// import { getAllSuperAdmins, registerSuperAdmin, sendOtpSuperAdmin, superAdminLogin } from "../controllers/superAdminControllers.js";
-// import { authValidationMW } from "../middleware/authValidationMW.js";
-
-// const superAdminApis = express.Router()
-
-// superAdminApis.post('/register', registerSuperAdmin)
-// superAdminApis.post("/send-otp", authValidationMW, sendOtpSuperAdmin);
-// superAdminApis.post("/login", authValidationMW, superAdminLogin);
-
-// superAdminApis.get('/all', getAllSuperAdmins)
-
-// export default superAdminApis;
-
-// src/apis/superAdminApis.js
 import express from "express";
 import {
+  deleteSuperAdmin,
   getAllSuperAdmins,
+  getSuperAdminById,
   registerSuperAdmin,
   sendOtpSuperAdmin,
   superAdminLogin,
+  updateSuperAdmin,
 } from "../controllers/superAdminControllers.js";
 import { authValidationMW } from "../middleware/authValidationMW.js";
 
@@ -129,5 +117,84 @@ superAdminApis.post("/login", authValidationMW, superAdminLogin);
  *         description: List of super admins
  */
 superAdminApis.get("/all", getAllSuperAdmins);
+
+/**
+ * @swagger
+ * /v1/super admin/{id}:
+ *   get:
+ *     summary: Get an super admins by ID
+ *     tags: [Super Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 2
+ *     responses:
+ *       200:
+ *         description: Super Admin details
+ *       404:
+ *         description: Super Admin not found
+ */
+superAdminApis.get("/:id", getSuperAdminById);
+
+/**
+ * @swagger
+ * /v1/super admin/{id}:
+ *   patch:
+ *     summary: Update an super admins by ID
+ *     tags: [Super Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 2
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: College
+ *     responses:
+ *       200:
+ *         description: Super Admin updated successfully
+ *       404:
+ *         description: Super Admin not found
+ */
+superAdminApis.patch("/:id", updateSuperAdmin);
+
+/**
+ * @swagger
+ * /v1/super-admin/{id}:
+ *   delete:
+ *     summary: Delete an super-admin by ID
+ *     tags: [Super Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 2
+ *     responses:
+ *       200:
+ *         description: Super Admin deleted successfully
+ *       404:
+ *         description: Super Admin not found
+ */
+superAdminApis.delete("/:id", deleteSuperAdmin);
 
 export default superAdminApis;

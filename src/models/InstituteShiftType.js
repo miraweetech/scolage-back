@@ -5,32 +5,40 @@ const InstituteShiftType = sequelize.define("InstituteShiftType", {
     institute_shift_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "shift_type_id"
     },
     created_by: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "created_by"
     },
     isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false 
+        defaultValue: false,
+        field: "isdeleted"
     },
     idesable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdisable"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     },
     starting_day: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        field: "starting_day"
     },
     ending_day: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        field: "ending_day"
     }
 }, {
     tableName: "institute_shift_types",

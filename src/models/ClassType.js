@@ -5,29 +5,36 @@ const ClassType = sequelize.define("ClassType", {
     class_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "class_id"
     },
     created_by: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "created_by"
     },
     title: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "title"
     },
     isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdeleted"
     },
-    idesable: {
+    isdisable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdisable"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     }
 }, {
     tableName: "class_type",

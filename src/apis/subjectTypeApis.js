@@ -15,7 +15,7 @@ SubjectTypeApi.use(authMiddleware);
 
 /**
  * @swagger
- * /subject-type:
+ * /v1/subject-type:
  *   post:
  *     summary: Create a new subject type
  *     tags: [Subject Types]
@@ -38,7 +38,7 @@ SubjectTypeApi.post("/", createSubjectType);
 
 /**
  * @swagger
- * /subject-type:
+ * /v1/subject-type:
  *   get:
  *     summary: Get all subject types
  *     tags: [Subject Types]
@@ -52,7 +52,7 @@ SubjectTypeApi.get("/", getAllSubjectType);
 
 /**
  * @swagger
- * /subject-type/{id}:
+ * /v1/subject-type/{id}:
  *   get:
  *     summary: Get subject type by ID
  *     tags: [Subject Types]
@@ -74,7 +74,7 @@ SubjectTypeApi.get("/:id", getSubjectTypeById);
 
 /**
  * @swagger
- * /subject-type/{id}:
+ * /v1/subject-type/{id}:
  *   put:
  *     summary: Update subject type
  *     tags: [Subject Types]
@@ -105,7 +105,7 @@ SubjectTypeApi.patch("/:id", updateSubjectType);
 
 /**
  * @swagger
- * /subject-type/{id}:
+ * /v1/subject-type/{id}:
  *   delete:
  *     summary: Delete subject type
  *     tags: [Subject Types]

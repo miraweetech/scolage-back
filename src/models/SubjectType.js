@@ -5,29 +5,36 @@ const SubjectType = sequelize.define("SubjectType", {
     subject_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "sub_type_id"
     },
     subject: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "subject"
     },
     created_by: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        field: "created_by"
     },
     isdisable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdisable"
     },
     isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdeleted"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     },
 }, {
     tableName: "subject_type",

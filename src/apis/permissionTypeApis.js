@@ -1,4 +1,3 @@
-// src/apis/permissionTypeApis.js
 import express from "express";
 import {
   createPermissions,

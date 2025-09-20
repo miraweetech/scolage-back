@@ -5,32 +5,40 @@ const InstituteInfrastructureType = sequelize.define("InstituteInfrastructureTyp
     infra_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "infra_id"
     },
     created_by: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "created_by"
     },
     name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "name"
     },
     icon_link: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "icon_link"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     },
     isdisable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdisable"
     },
     isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdeleted"
     }
 }, {
     tableName: "institute_infrastructure_type",

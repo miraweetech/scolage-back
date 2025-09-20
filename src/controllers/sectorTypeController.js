@@ -26,17 +26,28 @@ export const createSectorType = async (req, res) => {
 
 export const getAllSectorTypes = async (req, res) => {
     try {
-        const sectorTypes = await SectorType.findAll();
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
+
+        const { rows: data, count } = await SectorType.findAndCountAll({
+            limit,
+            offset
+        });
         return res.status(200).json({
-            // message: "Sector types retrieved",
-            data: sectorTypes
+            message: "sector type retrieved",
+            data,
+            totalItems: count,
+            currentPage: page,
+            totalPages: Math.ceil(count / limit),
+            pageSize: limit
+
         });
     } catch (error) {
-        return res.status(500).json({
-            error: error.message
-        });
+        res.status(500).json({ error: error.message });
     }
 };
+
 export const getSectorTypeById = async (req, res) => {
     try {
         const sectorType = await SectorType.findByPk(req.params.id);
@@ -55,6 +66,7 @@ export const getSectorTypeById = async (req, res) => {
         });
     }
 };
+
 export const updateSectorType = async (req, res) => {
     try {
         const sectorType = await SectorType.findByPk(req.params.id);
@@ -76,6 +88,7 @@ export const updateSectorType = async (req, res) => {
         });
     }
 };
+
 export const deleteSectorType = async (req, res) => {
     try {
         const sectorType = await SectorType.findByPk(req.params.id);

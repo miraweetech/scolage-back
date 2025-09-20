@@ -1,4 +1,4 @@
-import { InstitutePhoneType, InstituteShiftType } from "../models/index.js";
+import { InstituteShiftType } from "../models/index.js";
 
 export const createShiftType = async (req, res) => {
     try {

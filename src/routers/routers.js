@@ -66,7 +66,7 @@ routers.use('/designation', DesignationTypeApi)
 
 /**
  * @swagger
- * /upload:
+ * /v1/upload:
  *   post:
  *     summary: Upload a file
  *     description: Upload a single file (image, pdf, etc.)

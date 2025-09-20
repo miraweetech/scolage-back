@@ -1,20 +1,12 @@
-import { DataTypes, STRING } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const DesignationType = sequelize.define("DesignationType", {
-    designation_type_id: {
+const Institute3DImage = sequelize.define("Institute3DImage", {
+    institute_3D_image_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        field: "designation_id"
-    },
-    name: {
-        type: DataTypes.STRING,
-        field: "name"
-    },
-    created_by: {
-        type: DataTypes.INTEGER,
-        field: "created_by"
+        field: "3D_image_id"
     },
     isdisable: {
         type: DataTypes.BOOLEAN,
@@ -34,11 +26,11 @@ const DesignationType = sequelize.define("DesignationType", {
     modified_at: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
-        field: "ismodified_at"
+        field: "modified_at"
     },
 }, {
-    tableName: "designation_type",
+    tableName: "institute_3D_image",
     timestamps: false
 });
 
-export default DesignationType;
+export default Institute3DImage;

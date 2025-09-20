@@ -21,7 +21,7 @@ instituteSystemType.use(authMiddleware);
 
 /**
  * @swagger
- * /institute-system-type:
+ * /v1/institute-system-type:
  *   post:
  *     summary: Create a new institute system type
  *     tags: [Institute System Types]
@@ -44,7 +44,7 @@ instituteSystemType.post("/", createInstituteSystemType);
 
 /**
  * @swagger
- * /institute-system-type:
+ * /v1/institute-system-type:
  *   get:
  *     summary: Get all institute system types
  *     tags: [Institute System Types]
@@ -58,7 +58,7 @@ instituteSystemType.get("/", getAllInstituteSystemType);
 
 /**
  * @swagger
- * /institute-system-type/{id}:
+ * /v1/institute-system-type/{id}:
  *   get:
  *     summary: Get institute system type by ID
  *     tags: [Institute System Types]
@@ -80,7 +80,7 @@ instituteSystemType.get("/:id", getInstituteSystemTypeById);
 
 /**
  * @swagger
- * /institute-system-type/{id}:
+ * /v1/institute-system-type/{id}:
  *   put:
  *     summary: Update institute system type
  *     tags: [Institute System Types]
@@ -111,7 +111,7 @@ instituteSystemType.patch("/:id", updateInstituteSystemType);
 
 /**
  * @swagger
- * /institute-system-type/{id}:
+ * /v1/institute-system-type/{id}:
  *   delete:
  *     summary: Delete institute system type
  *     tags: [Institute System Types]

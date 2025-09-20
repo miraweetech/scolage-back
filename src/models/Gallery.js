@@ -5,24 +5,30 @@ const Gallery = sequelize.define("Gallery", {
     gallery_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "gallery_id"
     },
     institute_gallery_id: {
         type: DataTypes.INTEGER,
+        field: "ins_gallery_id"
     },
     gallery_name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "name"
     },
     institute_id: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        field: "ins_id"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     },
 }, {
     tableName: "gallery",

@@ -15,7 +15,7 @@ classTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /class-type:
+ * /v1/class-type:
  *   post:
  *     summary: Create a new class type
  *     tags: [Class Types]
@@ -38,7 +38,7 @@ classTypeApis.post("/", createClassType);
 
 /**
  * @swagger
- * /class-type:
+ * /v1/class-type:
  *   get:
  *     summary: Get all class types
  *     tags: [Class Types]
@@ -52,7 +52,7 @@ classTypeApis.get("/", getAllClassTypes);
 
 /**
  * @swagger
- * /class-type/{id}:
+ * /v1/class-type/{id}:
  *   get:
  *     summary: Get class type by ID
  *     tags: [Class Types]
@@ -74,7 +74,7 @@ classTypeApis.get("/:id", getClassTypeById);
 
 /**
  * @swagger
- * /class-type/{id}:
+ * /v1/class-type/{id}:
  *   put:
  *     summary: Update class type
  *     tags: [Class Types]
@@ -105,7 +105,7 @@ classTypeApis.patch("/:id", updateClassType);
 
 /**
  * @swagger
- * /class-type/{id}:
+ * /v1/class-type/{id}:
  *   delete:
  *     summary: Delete class type
  *     tags: [Class Types]

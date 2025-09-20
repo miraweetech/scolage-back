@@ -28,10 +28,22 @@ export const createClassType = async (req, res) => {
 
 export const getAllClassTypes = async (req, res) => {
     try {
-        const classTypes = await ClassType.findAll();
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
+
+        const { rows: data, count } = await ClassType.findAndCountAll({
+            limit,
+            offset
+        });
         return res.status(200).json({
-            // message: "Class types retrieved",
-            data: classTypes
+            message: "Class types retrieved",
+            data,
+            totalItems: count,
+            currentPage: page,
+            totalPages: Math.ceil(count / limit),
+            pageSize: limit
+
         });
     } catch (error) {
         return res.status(500).json({
@@ -52,7 +64,7 @@ export const getClassTypeById = async (req, res) => {
         }
 
         return res.status(200).json({
-            // message: "Class type retrieved",
+            message: "Class type retrieved",
             data: classType
         });
     } catch (error) {

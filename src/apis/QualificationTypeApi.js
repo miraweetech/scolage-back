@@ -15,7 +15,7 @@ QualificationTypeApi.use(authMiddleware);
 
 /**
  * @swagger
- * /qualification-type:
+ * /v1/qualification-type:
  *   post:
  *     summary: Create a new qualification type
  *     tags: [Qualification Types]
@@ -38,7 +38,7 @@ QualificationTypeApi.post("/", createQualificationType);
 
 /**
  * @swagger
- * /qualification-type:
+ * /v1/qualification-type:
  *   get:
  *     summary: Get all qualification types
  *     tags: [Qualification Types]
@@ -52,7 +52,7 @@ QualificationTypeApi.get("/", getAllQualificationType);
 
 /**
  * @swagger
- * /qualification-type/{id}:
+ * /v1/qualification-type/{id}:
  *   get:
  *     summary: Get qualification type by ID
  *     tags: [Qualification Types]
@@ -74,7 +74,7 @@ QualificationTypeApi.get("/:id", getQualificationTypeById);
 
 /**
  * @swagger
- * /qualification-type/{id}:
+ * /v1/qualification-type/{id}:
  *   put:
  *     summary: Update qualification type
  *     tags: [Qualification Types]
@@ -105,7 +105,7 @@ QualificationTypeApi.patch("/:id", updateQualificationType);
 
 /**
  * @swagger
- * /qualification-type/{id}:
+ * /v1/qualification-type/{id}:
  *   delete:
  *     summary: Delete qualification type
  *     tags: [Qualification Types]

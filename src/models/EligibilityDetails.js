@@ -5,29 +5,36 @@ const EligibilityDetails = sequelize.define("EligibilityDetails", {
     eligibility_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "eligibility_id"
     },
     eligibility_criteria: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "criteria"
     },
     fee_terms: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "terms"
     },
     isdisable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdisable"
     },
     isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdeleted"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     },
 }, {
     tableName: "eligibility_details",

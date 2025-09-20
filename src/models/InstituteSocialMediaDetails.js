@@ -5,36 +5,45 @@ const InstituteSocialMediaDetails = sequelize.define("InstituteSocialMediaDetail
     institute_social_media_details_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "social_media_detail_id"
     },
     institute_social_media_type_id: {
         type: DataTypes.INTEGER,
+        field: "social_media_type_id"
     },
     institute_social_media_id: {
         type: DataTypes.INTEGER,
+        field: "social_media_id"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_At"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     },
     isdisable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdisable"
     },
     isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdeleted"
     },
     isvisible: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true
+        defaultValue: true,
+        field: "isvisible"
     },
     social_media_url: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "url"
     }
 }, {
     tableName: "institute_social_media_details",

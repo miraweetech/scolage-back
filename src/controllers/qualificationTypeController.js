@@ -45,7 +45,6 @@ export const getAllQualificationType = async (req, res) => {
     }
 };
 
-
 export const getQualificationTypeById = async (req, res) => {
     try {
         const qualificationType = await QualificationType.findByPk(req.params.id);

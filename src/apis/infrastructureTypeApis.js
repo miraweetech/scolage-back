@@ -15,7 +15,7 @@ infrastructureTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /infrastructure-type:
+ * /v1/infrastructure-type:
  *   post:
  *     summary: Create a new infrastructure type
  *     tags: [Infrastructure Types]
@@ -38,7 +38,7 @@ infrastructureTypeApis.post("/", createInfrastructureType);
 
 /**
  * @swagger
- * /infrastructure-type:
+ * /v1/infrastructure-type:
  *   get:
  *     summary: Get all infrastructure types
  *     tags: [Infrastructure Types]
@@ -52,7 +52,7 @@ infrastructureTypeApis.get("/", getAllInfrastructureTypes);
 
 /**
  * @swagger
- * /infrastructure-type/{id}:
+ * /v1/infrastructure-type/{id}:
  *   get:
  *     summary: Get infrastructure type by ID
  *     tags: [Infrastructure Types]
@@ -74,7 +74,7 @@ infrastructureTypeApis.get("/:id", getInfrastructureTypeById);
 
 /**
  * @swagger
- * /infrastructure-type/{id}:
+ * /v1/infrastructure-type/{id}:
  *   put:
  *     summary: Update infrastructure type
  *     tags: [Infrastructure Types]
@@ -105,7 +105,7 @@ infrastructureTypeApis.patch("/:id", updateInfrastructureType);
 
 /**
  * @swagger
- * /infrastructure-type/{id}:
+ * /v1/infrastructure-type/{id}:
  *   delete:
  *     summary: Delete infrastructure type
  *     tags: [Infrastructure Types]

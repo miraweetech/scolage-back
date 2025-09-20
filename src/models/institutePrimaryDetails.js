@@ -1,54 +1,68 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/connection.js";
 
-const InstitutePrimaryDetails = sequelize.define("InstitutePrimaryDetails", {  
+const InstitutePrimaryDetails = sequelize.define("InstitutePrimaryDetails", {
     institute_primary_details_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "primary_detail_id"
     },
     name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "name"
     },
     clg_profile_image_link: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "img_profile_url"
     },
-    created_at:{
+    created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "cteated_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     },
-    institute_system_type_id: {
-        type: DataTypes.INTEGER
+    syatem_type_id: {
+        type: DataTypes.INTEGER,
+        field: "system_id"
     },
-    institute_academic_type_id: {
-        type: DataTypes.INTEGER
+    academic_type_id: {
+        type: DataTypes.INTEGER,
+        field: "academic_id"
     },
-    institute_affiliate_type_id: {
-        type: DataTypes.INTEGER
+    affiliate_type_id: {
+        type: DataTypes.INTEGER,
+        field: "affiliate_id"
     },
     collage_code: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        field: "clg_code"
     },
     isdisable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdisable"
     },
     isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdeleted"
     },
-    domain_name:{
-        type: DataTypes.STRING
+    domain_name: {
+        type: DataTypes.STRING,
+        field: "domain"
     },
     tld: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "tld"
     },
     institute_id: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        field: "ins_id"
     }
 }, {
     tableName: "institute_primary_details",

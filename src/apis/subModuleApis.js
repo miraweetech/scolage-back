@@ -1,4 +1,3 @@
-// src/apis/subModuleApis.js
 import express from "express";
 import {
   createSubModule,

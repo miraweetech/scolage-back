@@ -15,7 +15,7 @@ phoneTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /phone-type:
+ * /v1/phone-type:
  *   post:
  *     summary: Create a new phone type
  *     tags: [Phone Types]
@@ -38,7 +38,7 @@ phoneTypeApis.post("/", createPhoneType);
 
 /**
  * @swagger
- * /phone-type:
+ * /v1/phone-type:
  *   get:
  *     summary: Get all phone types
  *     tags: [Phone Types]
@@ -52,7 +52,7 @@ phoneTypeApis.get("/", getAllPhoneTypes);
 
 /**
  * @swagger
- * /phone-type/{id}:
+ * /v1/phone-type/{id}:
  *   get:
  *     summary: Get phone type by ID
  *     tags: [Phone Types]
@@ -74,7 +74,7 @@ phoneTypeApis.get("/:id", getPhoneTypeById);
 
 /**
  * @swagger
- * /phone-type/{id}:
+ * /v1/phone-type/{id}:
  *   put:
  *     summary: Update phone type
  *     tags: [Phone Types]
@@ -105,7 +105,7 @@ phoneTypeApis.patch("/:id", updatePhoneType);
 
 /**
  * @swagger
- * /phone-type/{id}:
+ * /v1/phone-type/{id}:
  *   delete:
  *     summary: Delete phone type
  *     tags: [Phone Types]

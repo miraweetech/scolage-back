@@ -76,7 +76,7 @@ export const sendOtpSuperAdmin = async (req, res) => {
         await redis.set(key, JSON.stringify(dataToStore), "EX", 300);
 
         const stored = await redis.get(key);
-       console.log("Fetched OTP from Redis:", key, "=>", stored);
+        console.log("Fetched OTP from Redis:", key, "=>", stored);
         return res.status(200).json({
             status: "success",
             message: `OTP sent successfully to ${user.email} for ${reason}`,
@@ -161,65 +161,65 @@ export const getAllSuperAdmins = async (req, res) => {
     }
 }
 
-// export const getSuperAdminById = async (req, res) => {
-//     try {
-//         const superAdmin = await SuperAdmin.findByPk(req.params.id, {
-//             include: [
-//                 {
-//                     model: User,
-//                     as: "creator",
-//                     attributes: ["id", "email", "mobile"]
-//                 }
-//             ]
-//         });
-//         if (!superAdmin) {
-//             return res.status(404).json({ message: "SuperAdmin not found" });
-//         }
-//         res.status(200).json(superAdmin);
-//     } catch (error) {
-//         res.status(500).json({
-//             message: "Error fetching super admin",
-//             error: error.message
-//         });
-//     }
-// };
+export const getSuperAdminById = async (req, res) => {
+    try {
+        const superAdmin = await SuperAdmin.findByPk(req.params.id, {
+            include: [
+                {
+                    model: User,
+                    as: "creator",
+                    attributes: ["id", "email", "mobile"]
+                }
+            ]
+        });
+        if (!superAdmin) {
+            return res.status(404).json({ message: "SuperAdmin not found" });
+        }
+        res.status(200).json(superAdmin);
+    } catch (error) {
+        res.status(500).json({
+            message: "Error fetching super admin",
+            error: error.message
+        });
+    }
+};
 
-// export const updateSuperAdmin = async (req, res) => {
-//     try {
-//         const [updated] = await SuperAdmin.update(
-//             { ...req.body, modified_at: new Date() },
-//             { where: { super_admin_id: req.params.id } }
-//         );
-//         if (!updated) {
-//             return res.status(404).json({ message: "SuperAdmin not found" });
-//         }
-//         const updatedSuperAdmin = await SuperAdmin.findByPk(req.params.id);
-//         res.status(200).json(updatedSuperAdmin);
-//     } catch (error) {
-//         res.status(400).json({
-//             message: "Error updating super admin",
-//             error: error.message
-//         });
-//     }
-// };
+export const updateSuperAdmin = async (req, res) => {
+    try {
+        const [updated] = await SuperAdmin.update(
+            { ...req.body, modified_at: new Date() },
+            { where: { super_admin_id: req.params.id } }
+        );
+        if (!updated) {
+            return res.status(404).json({ message: "SuperAdmin not found" });
+        }
+        const updatedSuperAdmin = await SuperAdmin.findByPk(req.params.id);
+        res.status(200).json(updatedSuperAdmin);
+    } catch (error) {
+        res.status(400).json({
+            message: "Error updating super admin",
+            error: error.message
+        });
+    }
+};
 
-// export const deleteSuperAdmin = async (req, res) => {
-//     try {
-//         await UserSuperMappings.destroy({
-//             where: { super_admin_id: req.params.id }
-//         });
+export const deleteSuperAdmin = async (req, res) => {
+    try {
+        await UserSuperMappings.destroy({
+            where: { super_admin_id: req.params.id }
+        });
 
-//         const deleted = await SuperAdmin.destroy({
-//             where: { super_admin_id: req.params.id }
-//         });
-//         if (!deleted) {
-//             return res.status(404).json({ message: "SuperAdmin not found" });
-//         }
-//         res.status(200).json({ message: "SuperAdmin deleted successfully" });
-//     } catch (error) {
-//         res.status(500).json({
-//             message: "Error deleting super admin",
-//             error: error.message
-//         });
-//     }
-// };
+        const deleted = await SuperAdmin.destroy({
+            where: { super_admin_id: req.params.id }
+        });
+        if (!deleted) {
+            return res.status(404).json({ message: "SuperAdmin not found" });
+        }
+        res.status(200).json({ message: "SuperAdmin deleted successfully" });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error deleting super admin",
+            error: error.message
+        });
+    }
+};

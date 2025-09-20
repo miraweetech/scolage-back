@@ -1,6 +1,6 @@
 import express from "express";
 import { authMiddleware } from "../middleware/authMiddleware.js";
-import { createAffiliateType, deleteAffiliateType, getAffiliateTypeById, getAllAffiliateTyps, updateAffiliateType } from "../controllers/affiliateTypeControllers.js";
+import { createAffiliateType, deleteAffiliateType, getAffiliateTypeById, getAllAffiliateType, updateAffiliateType } from "../controllers/affiliateTypeControllers.js";
 
 const affiliateTypeApis = express.Router();
 
@@ -15,7 +15,7 @@ affiliateTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /affiliate-type:
+ * /v1/affiliate-type:
  *   post:
  *     summary: Create a new affiliate type
  *     tags: [Affiliate Types]
@@ -38,7 +38,7 @@ affiliateTypeApis.post("/", createAffiliateType);
 
 /**
  * @swagger
- * /affiliate-type:
+ * /v1/affiliate-type:
  *   get:
  *     summary: Get all affiliate types
  *     tags: [Affiliate Types]
@@ -48,11 +48,11 @@ affiliateTypeApis.post("/", createAffiliateType);
  *       200:
  *         description: List of affiliate types
  */
-affiliateTypeApis.get("/", getAllAffiliateTyps);
+affiliateTypeApis.get("/", getAllAffiliateType);
 
 /**
  * @swagger
- * /affiliate-type/{id}:
+ * /v1/affiliate-type/{id}:
  *   get:
  *     summary: Get affiliate type by ID
  *     tags: [Affiliate Types]
@@ -74,7 +74,7 @@ affiliateTypeApis.get("/:id", getAffiliateTypeById);
 
 /**
  * @swagger
- * /affiliate-type/{id}:
+ * /v1/affiliate-type/{id}:
  *   put:
  *     summary: Update affiliate type
  *     tags: [Affiliate Types]
@@ -105,7 +105,7 @@ affiliateTypeApis.patch("/:id", updateAffiliateType);
 
 /**
  * @swagger
- * /affiliate-type/{id}:
+ * /v1/affiliate-type/{id}:
  *   delete:
  *     summary: Delete affiliate type
  *     tags: [Affiliate Types]

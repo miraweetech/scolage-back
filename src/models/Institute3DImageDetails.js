@@ -1,42 +1,38 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../configs/connection.js";
+import { sequelize } from "../configs/connection.js"
 
-const GalleryDocument = sequelize.define("GalleryDocument", {
-    gallery_document_id: {
+const Institute3DImageDetails = sequelize.define('Institute3DImageDetails', {
+    institute_3D_image_details_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        field: "gallery_doc_id"
+        field: "3D_img_detail_id"
     },
-    gallery_id: {
+    institute_3D_image_id: {
         type: DataTypes.INTEGER,
-        field: "gallery_id"
+        field: "3D_image_id"
     },
-    url: {
+    image_url: {
         type: DataTypes.STRING,
-        field: "url"
+        field: "image_url"
     },
     data: {
         type: DataTypes.JSON,
         field: "data"
     },
-    media_type_id: {
-        type: DataTypes.INTEGER,
-        field: "media_id"
-    },
     created_at: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
-        field: "cre_at"
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
-        field: "modi_at"
-    },
+        field: "modified_at"
+    }
 }, {
-    tableName: "gallery_document",
+    tableName: "institute_3D_image_details",
     timestamps: false
-});
+})
 
-export default GalleryDocument;
+export default Institute3DImageDetails

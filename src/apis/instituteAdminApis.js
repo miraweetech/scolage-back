@@ -1,9 +1,12 @@
 import express from "express";
 import {
   createInstituteAdmin,
+  deleteInstituteAdmin,
   getAllInstituteAdmins,
+  getInstituteAdminById,
   InstituteAdminLogin,
   sendOtpInstituteAdmin,
+  updateInstituteAdmin,
 } from "../controllers/instituteAdminControllers.js";
 import { instituteAuthValidationMW } from "../middleware/instituteAuthValidationMW.js";
 
@@ -69,11 +72,7 @@ instituteAdminApis.post("/register", createInstituteAdmin);
  *       400:
  *         description: Invalid request
  */
-instituteAdminApis.post(
-  "/send-otp",
-  instituteAuthValidationMW,
-  sendOtpInstituteAdmin
-);
+instituteAdminApis.post("/send-otp", instituteAuthValidationMW, sendOtpInstituteAdmin);
 
 /**
  * @swagger
@@ -100,11 +99,7 @@ instituteAdminApis.post(
  *       401:
  *         description: Invalid credentials
  */
-instituteAdminApis.post(
-  "/login",
-  instituteAuthValidationMW,
-  InstituteAdminLogin
-);
+instituteAdminApis.post("/login", instituteAuthValidationMW, InstituteAdminLogin);
 
 /**
  * @swagger
@@ -119,5 +114,84 @@ instituteAdminApis.post(
  *         description: List of all institute admins
  */
 instituteAdminApis.get("/all", getAllInstituteAdmins);
+
+/**
+ * @swagger
+ * /v1/institute-admin/{id}:
+ *   get:
+ *     summary: Get an institute admins by ID
+ *     tags: [Institute Admins]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 2
+ *     responses:
+ *       200:
+ *         description: Institute Admins details
+ *       404:
+ *         description: Institute Admins not found
+ */
+instituteAdminApis.get("/:id", getInstituteAdminById);
+
+/**
+ * @swagger
+ * /v1/institute-admin/{id}:
+ *   patch:
+ *     summary: Update an institute admins by ID
+ *     tags: [Institute Admins]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 2
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: College
+ *     responses:
+ *       200:
+ *         description: Institute Admin updated successfully
+ *       404:
+ *         description: Institute Admin not found
+ */
+instituteAdminApis.patch("/:id", updateInstituteAdmin);
+
+/**
+ * @swagger
+ * /v1/institute-admin/{id}:
+ *   delete:
+ *     summary: Delete an institute admin by ID
+ *     tags: [Institute Admins]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 2
+ *     responses:
+ *       200:
+ *         description: Institute Admin deleted successfully
+ *       404:
+ *         description: Institute Admin not found
+ */
+instituteAdminApis.delete("/:id", deleteInstituteAdmin);
 
 export default instituteAdminApis;

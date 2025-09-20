@@ -1,4 +1,4 @@
-import { InstituteAcademicType, InstituteAffiliateType } from "../models/index.js"
+import { InstituteAcademicType } from "../models/index.js"
 
 export const createAcademicType = async (req, res) => {
     try {

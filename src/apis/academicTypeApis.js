@@ -15,7 +15,7 @@ academicTypeApis.use(authMiddleware);
 
 /**
  * @swagger
- * /academic-type:
+ * /v1/academic-type:
  *   post:
  *     summary: Create a new academic type
  *     tags: [Academic Types]
@@ -38,7 +38,7 @@ academicTypeApis.post("/", createAcademicType);
 
 /**
  * @swagger
- * /academic-type:
+ * /v1/academic-type:
  *   get:
  *     summary: Get all academic types
  *     tags: [Academic Types]
@@ -52,7 +52,7 @@ academicTypeApis.get("/", getAllAcademicType);
 
 /**
  * @swagger
- * /academic-type/{id}:
+ * /v1/academic-type/{id}:
  *   get:
  *     summary: Get academic type by ID
  *     tags: [Academic Types]
@@ -74,7 +74,7 @@ academicTypeApis.get("/:id", getAcademicTypeById);
 
 /**
  * @swagger
- * /academic-type/{id}:
+ * /v1/academic-type/{id}:
  *   put:
  *     summary: Update academic type
  *     tags: [Academic Types]
@@ -105,7 +105,7 @@ academicTypeApis.patch("/:id", updateAcademicType);
 
 /**
  * @swagger
- * /academic-type/{id}:
+ * /v1/academic-type/{id}:
  *   delete:
  *     summary: Delete academic type
  *     tags: [Academic Types]

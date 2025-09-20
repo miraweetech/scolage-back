@@ -15,7 +15,7 @@ DesignationTypeApi.use(authMiddleware);
 
 /**
  * @swagger
- * /designation-type:
+ * /v1/designation-type:
  *   post:
  *     summary: Create a new designation type
  *     tags: [Designation Types]
@@ -38,7 +38,7 @@ DesignationTypeApi.post("/", createDesignationType);
 
 /**
  * @swagger
- * /designation-type:
+ * /v1/designation-type:
  *   get:
  *     summary: Get all designation types
  *     tags: [Designation Types]
@@ -52,7 +52,7 @@ DesignationTypeApi.get("/", getAllDesignationType);
 
 /**
  * @swagger
- * /designation-type/{id}:
+ * /v1/designation-type/{id}:
  *   get:
  *     summary: Get designation type by ID
  *     tags: [Designation Types]
@@ -74,7 +74,7 @@ DesignationTypeApi.get("/:id", getDesignationTypeById);
 
 /**
  * @swagger
- * /designation-type/{id}:
+ * /v1/designation-type/{id}:
  *   put:
  *     summary: Update designation type
  *     tags: [Designation Types]
@@ -105,7 +105,7 @@ DesignationTypeApi.patch("/:id", updateDesignationType);
 
 /**
  * @swagger
- * /designation-type/{id}:
+ * /v1/designation-type/{id}:
  *   delete:
  *     summary: Delete designation type
  *     tags: [Designation Types]

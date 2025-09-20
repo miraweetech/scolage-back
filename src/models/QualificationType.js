@@ -5,29 +5,36 @@ const QualificationType = sequelize.define("QualificationType", {
     qualification_type_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: "qualification_id"
     },
     name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        field: "name"
     },
     created_by: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        field: "created_by"
     },
     isdisable: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdisable"
     },
     isdeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        field: "isdeleted"
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "created_at"
     },
     modified_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: "modified_at"
     },
 }, {
     tableName: "qualification_type",
